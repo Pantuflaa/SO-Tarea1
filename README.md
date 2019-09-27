@@ -1,2 +1,5 @@
-# SO-Tarea1
-Tarea 1: Uno
+Sebastián Campos
+Axel Reyes
+
+
+-Para compilar, utilizar el comando make tomc, para ejecutar utilizar el comando make run.

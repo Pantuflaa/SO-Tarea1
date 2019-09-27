@@ -9,6 +9,11 @@
 
 int main()
 {
+    /*
+
+Creación de carpetas que albergaran los mazos y las manos de los jugadores.
+
+    */
     struct stat st = {0};
     if (stat("mazo", &st) == -1) {
         mkdir("mazo", 0700);
@@ -28,7 +33,13 @@ int main()
     if (stat("juego", &st) == -1) {
         mkdir("juego", 0700);
     }
+/*
 
+
+Creación de string con números
+
+
+*/
     char ** numeros = (char **)malloc(sizeof(char *)*10);
     int i = 0;
     for ( i = 0; i < 10; i++)
@@ -94,6 +105,13 @@ int main()
             numeros[i]=numero;
         }        
     }
+
+    /*
+
+
+Creación de string de colores
+
+    */
     char ** colores = (char **)malloc(sizeof(char*)*4);
     for (i = 0; i <4;  i++)
     {
@@ -117,6 +135,12 @@ int main()
         colores[i]=color;
         
     }
+
+    /*
+
+Creación de todas las cartas del mazo
+
+    */
    
    for ( i = 0; i < 4; i++)
    {    
@@ -204,7 +228,11 @@ int main()
     fclose(file7);
     fclose(file8);
     
+/*
 
+Repartir las cartas al azar a todos los jugadores.
+
+*/
 
     
     srand(time(NULL));  
@@ -255,11 +283,14 @@ int main()
  
     DIR *dir;
     struct dirent *ent;
-    
+    int fake=0;
     int cont=0;
     if ((dir = opendir ("mazo")) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
-            if(cont==mano1[0]|cont==mano1[1] | cont==mano1[2]|cont==mano1[3]|cont==mano1[4]|cont==mano1[5]|cont==mano1[6]){
+            if (fake < 2){
+                fake++;
+            }
+            else if((cont==mano1[0])|(cont==mano1[1]) | (cont==mano1[2])|(cont==mano1[3])|(cont==mano1[4])|(cont==mano1[5])|(cont==mano1[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j1/");
                 strcat(cartas,ent->d_name);
@@ -313,10 +344,16 @@ int main()
         if(si) flag=0;
         
     }
+    fake=0;
     cont=0;
     if ((dir = opendir ("mazo")) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
-            if(cont==mano2[0]|cont==mano2[1] | cont==mano2[2]|cont==mano2[3]|cont==mano2[4]|cont==mano2[5]|cont==mano2[6]){
+            if (fake < 2)
+            {
+                fake++;
+            }
+            
+            else if((cont==mano2[0])|(cont==mano2[1] )| (cont==mano2[2])|(cont==mano2[3])|(cont==mano2[4])|(cont==mano2[5])|(cont==mano2[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j2/");
                 strcat(cartas,ent->d_name);
@@ -371,9 +408,15 @@ int main()
         
     }
     cont=0;
+    fake = 0;
     if ((dir = opendir ("mazo")) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
-            if(cont==mano3[0]|cont==mano3[1] | cont==mano3[2]|cont==mano3[3]|cont==mano3[4]|cont==mano3[5]|cont==mano3[6]){
+            if (fake < 2)
+            {
+                fake++;
+            }
+            
+            else if((cont==mano3[0])|(cont==mano3[1]) | (cont==mano3[2])|(cont==mano3[3])|(cont==mano3[4])|(cont==mano3[5])|(cont==mano3[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j3/");
                 strcat(cartas,ent->d_name);
@@ -428,9 +471,15 @@ int main()
         
     }
     cont=0;
+    fake = 0;
     if ((dir = opendir ("mazo")) != NULL) {
         while ((ent = readdir (dir)) != NULL) {
-            if(cont==mano4[0]|cont==mano4[1] | cont==mano4[2]|cont==mano4[3]|cont==mano4[4]|cont==mano4[5]|cont==mano4[6]){
+            if (fake < 2)
+            {
+                fake++;
+            }
+            
+            else if((cont==mano4[0])|(cont==mano4[1]) | (cont==mano4[2])|(cont==mano4[3])|(cont==mano4[4])|(cont==mano4[5])|(cont==mano4[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j4/");
                 strcat(cartas,ent->d_name);
