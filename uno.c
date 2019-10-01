@@ -54,56 +54,56 @@ Creación de string con números
         {
             strcpy(numero,"uno");
             numeros[i]=numero;
-            
+
         }
-        
+
         if (i==2)
         {
             strcpy(numero,"dos");
             numeros[i]=numero;
         }
-        
+
         if (i==3)
         {
             strcpy(numero,"tres");
             numeros[i]=numero;
         }
-        
+
         if (i==4)
         {
             strcpy(numero,"cuatro");
             numeros[i]=numero;
         }
-        
+
         if (i==5)
         {
             strcpy(numero,"cinco");
             numeros[i]=numero;
         }
-        
+
         if (i==6)
         {
             strcpy(numero,"seis");
             numeros[i]=numero;
         }
-        
+
         if (i==7)
         {
             strcpy(numero,"siete");
             numeros[i]=numero;
         }
-        
+
         if (i==8)
         {
             strcpy(numero,"ocho");
             numeros[i]=numero;
         }
-        
+
         if (i==9)
         {
             strcpy(numero,"nueve");
             numeros[i]=numero;
-        }        
+        }
     }
 
     /*
@@ -133,7 +133,7 @@ Creación de string de colores
             strcpy(color,"amarillo");
         }
         colores[i]=color;
-        
+
     }
 
     /*
@@ -141,9 +141,9 @@ Creación de string de colores
 Creación de todas las cartas del mazo
 
     */
-   
+
    for ( i = 0; i < 4; i++)
-   {    
+   {
         char * archivo= (char *)malloc(sizeof(char)*30);
         char * archivo2= (char *)malloc(sizeof(char)*30);
         strcpy(archivo,"mazo/");
@@ -180,10 +180,10 @@ Creación de todas las cartas del mazo
         free(archivo2);
        int i2;
        for (i2 = 0; i2 < 10; i2++)
-       {    
+       {
            if (i2==0){
-                char * archivo= (char *)malloc(sizeof(char)*30);  
-                strcpy(archivo,"mazo/");  
+                char * archivo= (char *)malloc(sizeof(char)*30);
+                strcpy(archivo,"mazo/");
                 strcat(archivo,colores[i]);
                 strcat(archivo,numeros[i2]);
                 strcat(archivo,".txt");
@@ -209,7 +209,7 @@ Creación de todas las cartas del mazo
                 free(archivo);
                 free(archivo2);
             }
-        }    
+        }
    }
     FILE* file1 = fopen("mazo/negramascuatro.txt", "w");
     FILE* file2 = fopen("mazo/2negramascuatro.txt", "w");
@@ -227,16 +227,16 @@ Creación de todas las cartas del mazo
     fclose(file6);
     fclose(file7);
     fclose(file8);
-    
+
 /*
 
 Repartir las cartas al azar a todos los jugadores.
 
 */
 
-    
-    srand(time(NULL));  
-   
+
+    srand(time(NULL));
+
     int mano1[7];
     int mano2[7];
     int mano3[7];
@@ -246,8 +246,8 @@ Repartir las cartas al azar a todos los jugadores.
     {
         int si=1;
         for (i = 0; i < 7; i++) {
-            int r = rand() % 109; 
-            mano1[i]=r; 
+            int r = rand() % 109;
+            mano1[i]=r;
         }
         for (i = 0; i < 7; i++)
         {
@@ -263,24 +263,24 @@ Repartir las cartas al azar a todos los jugadores.
                    si=0;
                    break;
                }
-               
+
             }
             if (copias>=2)
             {
                 si=0;
                 break;
             }
-            
-            
+
+
         }
         if(si) flag=0;
-        
+
     }
 
-    
 
-    
- 
+
+
+
     DIR *dir;
     struct dirent *ent;
     int fake=0;
@@ -306,16 +306,16 @@ Repartir las cartas al azar a todos los jugadores.
             cont++;
         }
     closedir (dir);
-    } 
- 
-    
+    }
+
+
     flag=1;
      while (flag)
     {
         int si=1;
         for (i = 0; i < 7; i++) {
-            int r = rand() % 102; 
-            mano2[i]=r; 
+            int r = rand() % 102;
+            mano2[i]=r;
         }
         for (i = 0; i < 7; i++)
         {
@@ -331,18 +331,18 @@ Repartir las cartas al azar a todos los jugadores.
                    si=0;
                    break;
                }
-               
+
             }
             if (copias>=2)
             {
                 si=0;
                 break;
             }
-            
-            
+
+
         }
         if(si) flag=0;
-        
+
     }
     fake=0;
     cont=0;
@@ -352,7 +352,7 @@ Repartir las cartas al azar a todos los jugadores.
             {
                 fake++;
             }
-            
+
             else if((cont==mano2[0])|(cont==mano2[1] )| (cont==mano2[2])|(cont==mano2[3])|(cont==mano2[4])|(cont==mano2[5])|(cont==mano2[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j2/");
@@ -369,16 +369,16 @@ Repartir las cartas al azar a todos los jugadores.
             cont++;
         }
     closedir (dir);
-    } 
-    
-    
+    }
+
+
      flag=1;
      while (flag)
     {
         int si=1;
         for (i = 0; i < 7; i++) {
-            int r = rand() % 95; 
-            mano3[i]=r; 
+            int r = rand() % 95;
+            mano3[i]=r;
         }
         for (i = 0; i < 7; i++)
         {
@@ -394,18 +394,18 @@ Repartir las cartas al azar a todos los jugadores.
                    si=0;
                    break;
                }
-               
+
             }
             if (copias>=2)
             {
                 si=0;
                 break;
             }
-            
-            
+
+
         }
         if(si) flag=0;
-        
+
     }
     cont=0;
     fake = 0;
@@ -415,7 +415,7 @@ Repartir las cartas al azar a todos los jugadores.
             {
                 fake++;
             }
-            
+
             else if((cont==mano3[0])|(cont==mano3[1]) | (cont==mano3[2])|(cont==mano3[3])|(cont==mano3[4])|(cont==mano3[5])|(cont==mano3[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j3/");
@@ -432,7 +432,7 @@ Repartir las cartas al azar a todos los jugadores.
             cont++;
         }
     closedir (dir);
-    } 
+    }
 
 
      flag=1;
@@ -440,8 +440,8 @@ Repartir las cartas al azar a todos los jugadores.
     {
         int si=1;
         for (i = 0; i < 7; i++) {
-            int r = rand() % 88; 
-            mano4[i]=r; 
+            int r = rand() % 88;
+            mano4[i]=r;
         }
         for (i = 0; i < 7; i++)
         {
@@ -457,18 +457,18 @@ Repartir las cartas al azar a todos los jugadores.
                    si=0;
                    break;
                }
-               
+
             }
             if (copias>=2)
             {
                 si=0;
                 break;
             }
-            
-            
+
+
         }
         if(si) flag=0;
-        
+
     }
     cont=0;
     fake = 0;
@@ -478,7 +478,7 @@ Repartir las cartas al azar a todos los jugadores.
             {
                 fake++;
             }
-            
+
             else if((cont==mano4[0])|(cont==mano4[1]) | (cont==mano4[2])|(cont==mano4[3])|(cont==mano4[4])|(cont==mano4[5])|(cont==mano4[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j4/");
@@ -495,10 +495,10 @@ Repartir las cartas al azar a todos los jugadores.
             cont++;
         }
     closedir (dir);
-    } 
-    
-    
+    }
 
+
+printf("xd\n");
 
 
 
