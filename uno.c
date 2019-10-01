@@ -499,6 +499,7 @@ Repartir las cartas al azar a todos los jugadores.
 
 
 printf("xd\n");
+printf("JAJAJA\n");
 
 
 
