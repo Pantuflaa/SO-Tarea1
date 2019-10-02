@@ -523,7 +523,17 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
             }
             cont++;
         }
+        closedir(dir);
     }    
-        
+    for(i = 0; i < 4; i++){
+        free(colores[i]);
+    }
+    free(colores);
+
+    for(i = 0; i < 10; i++){
+        free(numeros[i]);
+    }
+    free(numeros);
+
     return 0;
 }
