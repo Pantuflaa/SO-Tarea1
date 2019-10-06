@@ -119,19 +119,19 @@ Creación de string de colores
         char* color = (char*)malloc(sizeof(char)*10);
         if (i==0)
         {
-           strcpy(color,"rojo");
+           strcpy(color,"roj");
         }
         if (i==1)
         {
-            strcpy(color,"azul");
+            strcpy(color,"zul");
         }
         if (i==2)
         {
-           strcpy(color,"verde");
+           strcpy(color,"vrd");
         }
         if (i==3)
         {
-            strcpy(color,"amarillo");
+            strcpy(color,"ama");
         }
         colores[i]=color;
         
@@ -147,32 +147,32 @@ Creación de todas las cartas del mazo
    {    
         char * archivo= (char *)malloc(sizeof(char)*30);
         char * archivo2= (char *)malloc(sizeof(char)*30);
-        strcpy(archivo,"mazo/");
+        strcpy(archivo,"mazo/1");
         strcpy(archivo2,"mazo/2");
         strcat(archivo,colores[i]);
         strcat(archivo2,colores[i]);
-        strcat(archivo,"masdos.txt");
-        strcat(archivo2,"masdos.txt");
+        strcat(archivo,"p.txt");
+        strcat(archivo2,"p.txt");
         FILE* file1 = fopen(archivo, "w");
         fclose(file1);
         FILE* file2 = fopen(archivo2, "w");
         fclose(file2);
-        strcpy(archivo,"mazo/");
+        strcpy(archivo,"mazo/1");
         strcpy(archivo2,"mazo/2");
         strcat(archivo,colores[i]);
         strcat(archivo2,colores[i]);
-        strcat(archivo,"reversa.txt");
-        strcat(archivo2,"reversa.txt");
+        strcat(archivo,"r.txt");
+        strcat(archivo2,"r.txt");
         FILE* file3 = fopen(archivo, "w");
         fclose(file3);
         FILE* file4 = fopen(archivo2, "w");
         fclose(file4);
-         strcpy(archivo,"mazo/");
+         strcpy(archivo,"mazo/1");
         strcpy(archivo2,"mazo/2");
         strcat(archivo,colores[i]);
         strcat(archivo2,colores[i]);
-        strcat(archivo,"cancelar.txt");
-        strcat(archivo2,"cancelar.txt");
+        strcat(archivo,"c.txt");
+        strcat(archivo2,"c.txt");
         FILE* file5 = fopen(archivo, "w");
         fclose(file5);
         FILE* file6 = fopen(archivo2, "w");
@@ -212,14 +212,14 @@ Creación de todas las cartas del mazo
             }
         }    
    }
-    FILE* file1 = fopen("mazo/negramascuatro.txt", "w");
-    FILE* file2 = fopen("mazo/2negramascuatro.txt", "w");
-    FILE* file3 = fopen("mazo/3negramascuatro.txt", "w");
-    FILE* file4 = fopen("mazo/4negramascuatro.txt", "w");
-    FILE* file5 = fopen("mazo/negracolores.txt", "w");
-    FILE* file6 = fopen("mazo/2negracolores.txt", "w");
-    FILE* file7 = fopen("mazo/3negracolores.txt", "w");
-    FILE* file8 = fopen("mazo/4negracolores.txt", "w");
+    FILE* file1 = fopen("mazo/1ngr4.txt", "w");
+    FILE* file2 = fopen("mazo/2ngr4.txt", "w");
+    FILE* file3 = fopen("mazo/3ngr4.txt", "w");
+    FILE* file4 = fopen("mazo/4ngr4.txt", "w");
+    FILE* file5 = fopen("mazo/1ngrc.txt", "w");
+    FILE* file6 = fopen("mazo/2ngrc.txt", "w");
+    FILE* file7 = fopen("mazo/3ngrc.txt", "w");
+    FILE* file8 = fopen("mazo/4ngrc.txt", "w");
     fclose(file1);
     fclose(file2);
     fclose(file3);
