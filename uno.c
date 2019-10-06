@@ -48,61 +48,61 @@ Creación de string con números
         char * numero= (char *)malloc(sizeof(char)*8);
         if (i==0)
         {
-            strcpy(numero,"cero");
+            strcpy(numero,"0");
             numeros[i]=numero;
         }
         if (i==1)
         {
-            strcpy(numero,"uno");
+            strcpy(numero,"1");
             numeros[i]=numero;
             
         }
         
         if (i==2)
         {
-            strcpy(numero,"dos");
+            strcpy(numero,"2");
             numeros[i]=numero;
         }
         
         if (i==3)
         {
-            strcpy(numero,"tres");
+            strcpy(numero,"3");
             numeros[i]=numero;
         }
         
         if (i==4)
         {
-            strcpy(numero,"cuatro");
+            strcpy(numero,"4");
             numeros[i]=numero;
         }
         
         if (i==5)
         {
-            strcpy(numero,"cinco");
+            strcpy(numero,"5");
             numeros[i]=numero;
         }
         
         if (i==6)
         {
-            strcpy(numero,"seis");
+            strcpy(numero,"6");
             numeros[i]=numero;
         }
         
         if (i==7)
         {
-            strcpy(numero,"siete");
+            strcpy(numero,"7");
             numeros[i]=numero;
         }
         
         if (i==8)
         {
-            strcpy(numero,"ocho");
+            strcpy(numero,"8");
             numeros[i]=numero;
         }
         
         if (i==9)
         {
-            strcpy(numero,"nueve");
+            strcpy(numero,"9");
             numeros[i]=numero;
         }        
     }
@@ -119,19 +119,19 @@ Creación de string de colores
         char* color = (char*)malloc(sizeof(char)*10);
         if (i==0)
         {
-           strcpy(color,"rojo");
+           strcpy(color,"roj");
         }
         if (i==1)
         {
-            strcpy(color,"azul");
+            strcpy(color,"zul");
         }
         if (i==2)
         {
-           strcpy(color,"verde");
+           strcpy(color,"ver");
         }
         if (i==3)
         {
-            strcpy(color,"amarillo");
+            strcpy(color,"ama");
         }
         colores[i]=color;
         
@@ -184,7 +184,7 @@ Creación de todas las cartas del mazo
        {    
            if (i2==0){
                 char * archivo= (char *)malloc(sizeof(char)*30);  
-                strcpy(archivo,"mazo/");  
+                strcpy(archivo,"mazo/1");  
                 strcat(archivo,colores[i]);
                 strcat(archivo,numeros[i2]);
                 strcat(archivo,".txt");
@@ -195,7 +195,7 @@ Creación de todas las cartas del mazo
            else{
                 char * archivo= (char *)malloc(sizeof(char)*30);
                 char * archivo2= (char *)malloc(sizeof(char)*30);
-                strcpy(archivo,"mazo/");
+                strcpy(archivo,"mazo/1");
                 strcpy(archivo2,"mazo/2");
                 strcat(archivo,colores[i]);
                 strcat(archivo,numeros[i2]);
