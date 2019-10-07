@@ -18,9 +18,11 @@ Axel Reyes: Creación de strings, colores, y cartas del mazo.
 ENTREGA 2:
 
 - Al pedir el número de la opción deseada, por favor no ingresar strings (o explota).
+- Las cartas +2, +4, reversa y bloqueo no aplican efecto para esta entrega (se implementará para la tercera entrega con los pipes)
+- La carta cambiocolor aplica su efecto através de la carta "dummy" (explicada más abajo).
 - Para mayor facilidad en la verificación de jugadas válidas, se estandarizó al siguiente formato para el nombre de las cartas:
 
-carta = CopiaColorTipo".txt" || Copian"ngr"Tipon".txt" 
+Carta = CopiaColorTipo".txt" || Copian"ngr"Tipon".txt" 
 Copia = '1' || '2'
 Copian = '1' || '2' || '3'|| '4'
 Color = 'roj'|| 'ver'|| 'zul' || 'ama' 
@@ -59,10 +61,10 @@ EJEMPLOS:
 	1zulr.txt --> Copia número uno del reversa azul
 	2verb.txt --> Copia número dos del bloqueo verde
 
-La carta negra de cambio color para efectos prácticos de esta entrega genera una carta "dummy" en el pozo la cual indicará el color elegido por el jugador que la lanzó
+La carta negra de cambio color para efectos prácticos de esta entrega genera una carta "dummy" en el pozo la cual indicará el color elegido por el jugador que la lanzó.
 
 Ejemplo de carta dummy:
 
-	El jugador que lanza el color escoge el azul, por ende la carta que se genera en el pozo será --> _zul_.txt (Por ende el jugador sólo podrá jugar cartas azules o negras)
+El jugador que lanza la carta negra escoge el azul, por ende la carta que se genera en el pozo será --> _zul_.txt (Lo que implica que el siguiente jugador sólo podrá jugar cartas azules o negras).
 
 

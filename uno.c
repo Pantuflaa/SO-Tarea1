@@ -1752,8 +1752,18 @@ char jugar(int jugador){
 int main()
 {
     crearArchivos();
-    while(1){
-        jugar(1);
+    int i = 0, flag = 1;
+    while(flag){
+        printf("\nTurno del jugador %d", i%4+1);
+        jugar(i%4 + 1);
+        if(mano[i%4] == 0){
+            flag = 0;
+        }
+        else if(mano[i%4] == 1){
+            printf("Al jugador %d le queda 1 carta!!!", i%4+1);
+        }
+        i++;
     }
+    printf("El jugador %d ganó!!!!!\n",i%4);
     return 0;
 }
