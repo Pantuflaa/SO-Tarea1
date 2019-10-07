@@ -1353,44 +1353,20 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
     int mano2[7];
     int mano3[7];
     int mano4[7];
-    int flag=1;
-    while (flag)
-    {
-        int si=1;
-        for (i = 0; i < 7; i++) {
-            int r = rand() % 109;
-            mano1[i]=r;
-        }
-        for (i = 0; i < 7; i++)
+  
+    for (i = 0; i < 7; i++) {
+        int r = rand() % 107;
+        int i2;
+        for ( i2 = 0; i2 < i; i2++)
         {
-            int i2;
-            int copias=0;
-            for (i2 = 0; i2 < 7; i2++)
-            {
-               if(mano1[i]==mano1[i2]){
-                   copias+=1;
-               }
-               if (copias>=2)
-               {
-                   si=0;
-                   break;
-               }
-
+            if(r==mano1[i2]){
+                i2--;
+                 r= rand() % 107;
             }
-            if (copias>=2)
-            {
-                si=0;
-                break;
-            }
-
-
-        }
-        if(si) flag=0;
-
+        }              
+         mano1[i]=r;
+        
     }
-
-
-
 
 
     DIR *dir;
@@ -1401,12 +1377,14 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
         while ((ent = readdir (dir)) != NULL) {
             if (fake < 2){
                 fake++;
+                cont--;
             }
-            else if((cont==mano1[0])|(cont==mano1[1]) | (cont==mano1[2])|(cont==mano1[3])|(cont==mano1[4])|(cont==mano1[5])|(cont==mano1[6])){
+        else if((cont==mano1[0])||(cont==mano1[1]) || (cont==mano1[2])||(cont==mano1[3])||(cont==mano1[4])||(cont==mano1[5])||(cont==mano1[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j1/");
                 strcat(cartas,ent->d_name);
                 FILE* carta= fopen(cartas,"w");
+               
                 fclose(carta);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(borrar,"mazo/");
@@ -1419,43 +1397,21 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
         }
     closedir (dir);
     }
-
-
-    flag=1;
-     while (flag)
-    {
-        int si=1;
-        for (i = 0; i < 7; i++) {
-            int r = rand() % 102;
-            mano2[i]=r;
-        }
-        for (i = 0; i < 7; i++)
+   
+    for (i = 0; i < 7; i++) {
+        int r = rand() % 100;
+        int i2;
+        for ( i2 = 0; i2 < i; i2++)
         {
-            int i2;
-            int copias=0;
-            for (i2 = 0; i2 < 7; i2++)
-            {
-               if(mano2[i]==mano2[i2]){
-                   copias+=1;
-               }
-               if (copias>=2)
-               {
-                   si=0;
-                   break;
-               }
-
+            if(r==mano2[i2]){
+                i2--;
+                 r= rand() % 100;
             }
-            if (copias>=2)
-            {
-                si=0;
-                break;
-            }
-
-
-        }
-        if(si) flag=0;
-
+        }              
+         mano2[i]=r;
+        
     }
+        
     fake=0;
     cont=0;
     if ((dir = opendir ("mazo")) != NULL) {
@@ -1463,13 +1419,15 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
             if (fake < 2)
             {
                 fake++;
+                cont--;
             }
 
-            else if((cont==mano2[0])|(cont==mano2[1] )| (cont==mano2[2])|(cont==mano2[3])|(cont==mano2[4])|(cont==mano2[5])|(cont==mano2[6])){
+            else if((cont==mano2[0])||(cont==mano2[1] )|| (cont==mano2[2])||(cont==mano2[3])||(cont==mano2[4])||(cont==mano2[5])||(cont==mano2[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j2/");
                 strcat(cartas,ent->d_name);
                 FILE* carta= fopen(cartas,"w");
+               
                 fclose(carta);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(borrar,"mazo/");
@@ -1484,41 +1442,22 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
     }
 
 
-     flag=1;
-     while (flag)
-    {
-        int si=1;
-        for (i = 0; i < 7; i++) {
-            int r = rand() % 95;
-            mano3[i]=r;
-        }
-        for (i = 0; i < 7; i++)
+       
+    for (i = 0; i < 7; i++) {
+        int r = rand() % 93;
+        int i2;
+        for ( i2 = 0; i2 < i; i2++)
         {
-            int i2;
-            int copias=0;
-            for (i2 = 0; i2 < 7; i2++)
-            {
-               if(mano3[i]==mano3[i2]){
-                   copias+=1;
-               }
-               if (copias>=2)
-               {
-                   si=0;
-                   break;
-               }
-
+            if(r==mano3[i2]){
+                i2--;
+                 r= rand() % 93;
             }
-            if (copias>=2)
-            {
-                si=0;
-                break;
-            }
-
-
-        }
-        if(si) flag=0;
-
+        }              
+         mano3[i]=r;
+         
     }
+        
+       
     cont=0;
     fake = 0;
     if ((dir = opendir ("mazo")) != NULL) {
@@ -1526,13 +1465,15 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
             if (fake < 2)
             {
                 fake++;
+                cont--;
             }
 
-            else if((cont==mano3[0])|(cont==mano3[1]) | (cont==mano3[2])|(cont==mano3[3])|(cont==mano3[4])|(cont==mano3[5])|(cont==mano3[6])){
+            else if((cont==mano3[0])||(cont==mano3[1]) || (cont==mano3[2])||(cont==mano3[3])||(cont==mano3[4])||(cont==mano3[5])||(cont==mano3[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j3/");
                 strcat(cartas,ent->d_name);
                 FILE* carta= fopen(cartas,"w");
+               
                 fclose(carta);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(borrar,"mazo/");
@@ -1547,41 +1488,22 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
     }
 
 
-     flag=1;
-     while (flag)
-    {
-        int si=1;
-        for (i = 0; i < 7; i++) {
-            int r = rand() % 88;
-            mano4[i]=r;
-        }
-        for (i = 0; i < 7; i++)
+     
+    for (i = 0; i < 7; i++) {
+        int r = rand() % 86;
+        int i2;
+        for ( i2 = 0; i2 < i; i2++)
         {
-            int i2;
-            int copias=0;
-            for (i2 = 0; i2 < 7; i2++)
-            {
-               if(mano4[i]==mano4[i2]){
-                   copias+=1;
-               }
-               if (copias>=2)
-               {
-                   si=0;
-                   break;
-               }
-
+            if(r==mano4[i2]){
+                i2--;
+                 r= rand() % 86;
             }
-            if (copias>=2)
-            {
-                si=0;
-                break;
-            }
-
-
-        }
-        if(si) flag=0;
-
+            
+        }              
+         mano4[i]=r;
+       
     }
+        
     cont=0;
     fake = 0;
     if ((dir = opendir ("mazo")) != NULL) {
@@ -1589,13 +1511,15 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
             if (fake < 2)
             {
                 fake++;
+                cont--;
             }
 
-            else if((cont==mano4[0])|(cont==mano4[1]) | (cont==mano4[2])|(cont==mano4[3])|(cont==mano4[4])|(cont==mano4[5])|(cont==mano4[6])){
+            else if((cont==mano4[0])||(cont==mano4[1]) || (cont==mano4[2])||(cont==mano4[3])||(cont==mano4[4])||(cont==mano4[5])||(cont==mano4[6])){
                 char * cartas = (char * )malloc(sizeof(char)*40);
                 strcpy(cartas,"j4/");
                 strcat(cartas,ent->d_name);
                 FILE* carta= fopen(cartas,"w");
+               
                 fclose(carta);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(borrar,"mazo/");
@@ -1609,7 +1533,7 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
     closedir (dir);
     }
 
-    int r = rand() % 81;
+    int r = rand() % 79;
     cont = 0;
     fake = 0;
     if ((dir = opendir ("mazo")) != NULL) {
@@ -1617,6 +1541,7 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
             if (fake < 2)
             {
                 fake++;
+                cont--;
             }
             else if(cont == r)
             {
