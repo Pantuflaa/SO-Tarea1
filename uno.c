@@ -46,7 +46,7 @@ char robar (int J){
 
         }
 
-        printf("CARTA QUE SE SUPONE ESTA EN JUEGO, %s\n",aux->d_name);
+        printf("LA CARTA EN JUEGO ES: %s\n",aux->d_name);
         if ((dir = opendir ("mazo")) != NULL) {       
             if (J==1)
             {
@@ -68,70 +68,227 @@ char robar (int J){
                        printf("%s\n",naux);
                        if (nent[4]=='c'||(nent[1]=='n'&& nent[4]=='4'))
                        {
-                            int r = rand() % 4;
-                            char * play = (char * )malloc(sizeof(char)*40);
-                            strcpy(play,"juego/");
-                            if(r == 0){
-                                strcat(play,"_roj_.txt");
+                           while (1)
+                           {
+                               printf("Ha obtenido la carta %s\n",nent);
+                               printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                               int op;
+                               scanf("%d",&op);
+                               printf("\n");
+                                if (op==1)
+                                {     
+                                    while (1)
+                                    {
+                                      printf("Seleccione el color que desea:\n0.-Rojo\n1.-Verde\n2.-Azul\n3.-Amarillo\nIngrese su opcion:");
+                                        int r;
+                                        scanf("%d",&r);
+                                        if(r == 0){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_roj_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                          
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+              
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else if(r == 1){
-                                strcat(play,"_ver_.txt");
+                                            break;
 
-                            }
-                            else if(r == 2){
-                                strcat(play,"_zul_.txt");
+                                        }
+                                        else if(r == 1){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ver_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                 
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                         
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else{
-                                strcat(play,"_ama_.txt");
-                            }
+                                            break;
 
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,naux);
-                            remove(borrar);
-                            printf("se borró %s\n",borrar);
-                            FILE* file1 = fopen(play, "w");
-                            fclose(file1);
-                            printf("se creo %s\n",play);
-                            printf("Y la jugó\n");
-                            char re = play[4];
-                            free(borrar);
-                            free(play);
-                            free(nent);
-                            free(naux);
-                            closedir(dir);
-                            if (nent[1]=='n'&& nent[4]=='4')
-                            {
-                                return 'n';
-                            }
-                            
-                            return re;   
+                                        }
+                                        else if(r == 2){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_zul_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                        
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
+                                            break;
+
+                                        }
+                                        else if (r==3)
+                                        {
+                                            char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ama_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                      
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
+
+                                           break;
+                                        }
+                                        else
+                                        {
+                                            printf("Opción invalida, ingrese de nuevo su color.\n");
+                                        }
+                                    }
+                                    
+                                          
+                                        
+                                  
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                        char * guardar = (char * )malloc(sizeof(char)*40);
+                                        strcpy(guardar,"j1/");
+                                        strcat(guardar,ent->d_name);
+                                        FILE* file1 = fopen(guardar, "w");
+                                        fclose(file1);
+                                        free(guardar);
+                                        closedir(dir);
+                                        mano[0]++;
+
+                                        return 'x';
+                                        break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingrese nuevamente\n");
+                                }
+                           }
+                           
+                         
+                          
+
+                          
                            
                        }   
                        else if (nent[1]==naux[1]||nent[4]==naux[4])
-                       {    
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,naux);
-                            remove(borrar);
-                            printf("se borró xd %s\n",borrar);
-                            char * agregar= (char *)malloc(sizeof(char)*40);
-                            strcpy(agregar,"juego/");
-                            strcat(agregar,ent->d_name);
-                            FILE* file1 = fopen(agregar, "w");
-                            fclose(file1);
-                            printf("se agrego xd %s\n",agregar);
-                            printf("Y la jugó\n");
-                            char re = agregar[4];
-                            free(borrar);
-                            free(agregar);
-                            free(nent);
-                            free(naux);
-                             closedir(dir);
-                            return re;
+                       {
+                            while (1)
+                            {
+                                /* code */
+                                printf("Ha obtenido la carta %s\n",nent);
+                                printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                                int op;
+                                scanf("%d",&op);
+                                printf("\n");
+                                if(op==1){
+                                    char * borrar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(borrar,"juego/");
+                                    strcat(borrar,naux);
+                                    remove(borrar);
+                             
+                                    char * agregar= (char *)malloc(sizeof(char)*40);
+                                    strcpy(agregar,"juego/");
+                                    strcat(agregar,ent->d_name);
+                                    FILE* file1 = fopen(agregar, "w");
+                                    fclose(file1);
+                            
+                                    printf("Y la jugó\n");
+                                    char re = agregar[4];
+                                    free(borrar);
+                                    free(agregar);
+                                    free(nent);
+                                    free(naux);
+                                    closedir(dir);
+                                    return re;
+
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                    char * guardar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(guardar,"j1/");
+                                    strcat(guardar,ent->d_name);
+                                    FILE* file1 = fopen(guardar, "w");
+                                    fclose(file1);
+                                    free(guardar);
+                                    closedir(dir);
+                                    mano[0]++;
+
+                                    return 'x';
+                                    break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingresela nuevamente\n");
+                                }    
+                            }
                        } 
                        else
                        {
@@ -156,7 +313,7 @@ char robar (int J){
             }
             else if (J==2)
             {
-                while ((ent = readdir (dir)) != NULL) {
+                   while ((ent = readdir (dir)) != NULL) {
                     if (fake < 2){
                         fake++;
                     }
@@ -167,75 +324,235 @@ char robar (int J){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
+                       cartasmazo--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
                        printf("%s\n",naux);
                        if (nent[4]=='c'||(nent[1]=='n'&& nent[4]=='4'))
                        {
-                            int r = rand() % 4;
-                            char * play = (char * )malloc(sizeof(char)*40);
-                            strcpy(play,"juego/");
-                            if(r == 0){
-                                strcat(play,"_roj_.txt");
+                           while (1)
+                           {
+                               printf("Ha obtenido la carta %s\n",nent);
+                               printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                               int op;
+                               scanf("%d",&op);
+                               printf("\n");
+                                if (op==1)
+                                {     
+                                    while (1)
+                                    {
+                                      printf("Seleccione el color que desea:\n0.-Rojo\n1.-Verde\n2.-Azul\n3.-Amarillo\nIngrese su opcion:");
+                                        int r;
+                                        scanf("%d",&r);
+                                        if(r == 0){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_roj_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                          
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+              
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else if(r == 1){
-                                strcat(play,"_ver_.txt");
+                                            break;
 
-                            }
-                            else if(r == 2){
-                                strcat(play,"_zul_.txt");
+                                        }
+                                        else if(r == 1){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ver_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                 
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                         
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else{
-                                strcat(play,"_ama_.txt");
-                            }
+                                            break;
 
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            FILE* file1 = fopen(play, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re = play[4];
-                            free(borrar);
-                            free(play);
-                            free(nent);
-                            free(naux);
-                            closedir(dir);
-                            if (nent[1]=='n'&& nent[4]=='4')
-                            {
-                                return 'n';
-                            }
-                            return re;
-                            break;
+                                        }
+                                        else if(r == 2){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_zul_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                        
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
+                                            break;
+
+                                        }
+                                        else if (r==3)
+                                        {
+                                            char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ama_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                      
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
+
+                                           break;
+                                        }
+                                        else
+                                        {
+                                            printf("Opción invalida, ingrese de nuevo su color.\n");
+                                        }
+                                    }
+                                    
+                                          
+                                        
+                                  
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                        char * guardar = (char * )malloc(sizeof(char)*40);
+                                        strcpy(guardar,"j2/");
+                                        strcat(guardar,ent->d_name);
+                                        FILE* file1 = fopen(guardar, "w");
+                                        fclose(file1);
+                                        free(guardar);
+                                        closedir(dir);
+                                        mano[1]++;
+
+                                        return 'x';
+                                        break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingrese nuevamente\n");
+                                }
+                           }
+                           
+                         
+                          
+
+                          
                            
                        }   
                        else if (nent[1]==naux[1]||nent[4]==naux[4])
-                       {    
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            char * agregar= (char *)malloc(sizeof(char)*40);
-                            strcpy(agregar,"juego/");
-                            strcat(agregar,ent->d_name);
-                            FILE* file1 = fopen(agregar, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re = agregar[4];
-                            free(borrar);
-                            free(agregar);
-                            free(nent);
-                            free(naux);
-                             closedir(dir);
-                            return re;
+                       {
+                            while (1)
+                            {
+                                /* code */
+                                printf("Ha obtenido la carta %s\n",nent);
+                                printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                                int op;
+                                scanf("%d",&op);
+                                printf("\n");
+                                if(op==1){
+                                    char * borrar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(borrar,"juego/");
+                                    strcat(borrar,naux);
+                                    remove(borrar);
+                             
+                                    char * agregar= (char *)malloc(sizeof(char)*40);
+                                    strcpy(agregar,"juego/");
+                                    strcat(agregar,ent->d_name);
+                                    FILE* file1 = fopen(agregar, "w");
+                                    fclose(file1);
+                            
+                                    printf("Y la jugó\n");
+                                    char re = agregar[4];
+                                    free(borrar);
+                                    free(agregar);
+                                    free(nent);
+                                    free(naux);
+                                    closedir(dir);
+                                    return re;
 
-                            break;
-                       }
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                    char * guardar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(guardar,"j2/");
+                                    strcat(guardar,ent->d_name);
+                                    FILE* file1 = fopen(guardar, "w");
+                                    fclose(file1);
+                                    free(guardar);
+                                    closedir(dir);
+                                    mano[1]++;
+
+                                    return 'x';
+                                    break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingresela nuevamente\n");
+                                }    
+                            }
+                       } 
                        else
                        {
                            printf("Y la guardó en su mano\n");
@@ -243,12 +560,11 @@ char robar (int J){
                            strcpy(guardar,"j2/");
                            strcat(guardar,ent->d_name);
                            FILE* file1 = fopen(guardar, "w");
-
                            fclose(file1);
-    
                            free(guardar);
                             closedir(dir);
                             mano[1]++;
+
                            return 'x';
                            break;
                        }
@@ -257,11 +573,11 @@ char robar (int J){
                     }
                     cont++;
                 }
-                /* code */
+               
             }
             else if (J==3)
             {
-                while ((ent = readdir (dir)) != NULL) {
+                   while ((ent = readdir (dir)) != NULL) {
                     if (fake < 2){
                         fake++;
                     }
@@ -272,76 +588,235 @@ char robar (int J){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
+                       cartasmazo--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
                        printf("%s\n",naux);
                        if (nent[4]=='c'||(nent[1]=='n'&& nent[4]=='4'))
                        {
-                            int r = rand() % 4;
-                            char * play = (char * )malloc(sizeof(char)*40);
-                            strcpy(play,"juego/");
-                            if(r == 0){
-                                strcat(play,"_roj_.txt");
+                           while (1)
+                           {
+                               printf("Ha obtenido la carta %s\n",nent);
+                               printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                               int op;
+                               scanf("%d",&op);
+                               printf("\n");
+                                if (op==1)
+                                {     
+                                    while (1)
+                                    {
+                                      printf("Seleccione el color que desea:\n0.-Rojo\n1.-Verde\n2.-Azul\n3.-Amarillo\nIngrese su opcion:");
+                                        int r;
+                                        scanf("%d",&r);
+                                        if(r == 0){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_roj_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                          
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+              
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else if(r == 1){
-                                strcat(play,"_ver_.txt");
+                                            break;
 
-                            }
-                            else if(r == 2){
-                                strcat(play,"_zul_.txt");
+                                        }
+                                        else if(r == 1){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ver_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                 
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                         
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else{
-                                strcat(play,"_ama_.txt");
-                            }
+                                            break;
 
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            FILE* file1 = fopen(play, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re=play[4];
+                                        }
+                                        else if(r == 2){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_zul_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                        
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            free(borrar);
-                            free(play);
-                            free(nent);
-                            free(naux);
-                             closedir(dir);
-                            if (nent[1]=='n'&& nent[4]=='4')
-                            {
-                                return 'n';
-                            }
-                            
-                            return re;
-                            break;
+                                            break;
 
+                                        }
+                                        else if (r==3)
+                                        {
+                                            char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ama_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                      
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
+
+                                           break;
+                                        }
+                                        else
+                                        {
+                                            printf("Opción invalida, ingrese de nuevo su color.\n");
+                                        }
+                                    }
+                                    
+                                          
+                                        
+                                  
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                        char * guardar = (char * )malloc(sizeof(char)*40);
+                                        strcpy(guardar,"j3/");
+                                        strcat(guardar,ent->d_name);
+                                        FILE* file1 = fopen(guardar, "w");
+                                        fclose(file1);
+                                        free(guardar);
+                                        closedir(dir);
+                                        mano[2]++;
+
+                                        return 'x';
+                                        break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingrese nuevamente\n");
+                                }
+                           }
+                           
+                         
+                          
+
+                          
                            
                        }   
                        else if (nent[1]==naux[1]||nent[4]==naux[4])
-                       {    
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            char * agregar= (char *)malloc(sizeof(char)*40);
-                            strcpy(agregar,"juego/");
-                            strcat(agregar,ent->d_name);
-                            FILE* file1 = fopen(agregar, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re = agregar[4];
-                            free(borrar);
-                            free(agregar);
-                            free(nent);
-                            free(naux);
-                             closedir(dir);
-                            return re;
-                            break;
-                       }
+                       {
+                            while (1)
+                            {
+                                /* code */
+                                printf("Ha obtenido la carta %s\n",nent);
+                                printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                                int op;
+                                scanf("%d",&op);
+                                printf("\n");
+                                if(op==1){
+                                    char * borrar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(borrar,"juego/");
+                                    strcat(borrar,naux);
+                                    remove(borrar);
+                             
+                                    char * agregar= (char *)malloc(sizeof(char)*40);
+                                    strcpy(agregar,"juego/");
+                                    strcat(agregar,ent->d_name);
+                                    FILE* file1 = fopen(agregar, "w");
+                                    fclose(file1);
+                            
+                                    printf("Y la jugó\n");
+                                    char re = agregar[4];
+                                    free(borrar);
+                                    free(agregar);
+                                    free(nent);
+                                    free(naux);
+                                    closedir(dir);
+                                    return re;
+
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                    char * guardar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(guardar,"j3/");
+                                    strcat(guardar,ent->d_name);
+                                    FILE* file1 = fopen(guardar, "w");
+                                    fclose(file1);
+                                    free(guardar);
+                                    closedir(dir);
+                                    mano[2]++;
+
+                                    return 'x';
+                                    break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingresela nuevamente\n");
+                                }    
+                            }
+                       } 
                        else
                        {
                            printf("Y la guardó en su mano\n");
@@ -353,6 +828,7 @@ char robar (int J){
                            free(guardar);
                             closedir(dir);
                             mano[2]++;
+
                            return 'x';
                            break;
                        }
@@ -361,11 +837,11 @@ char robar (int J){
                     }
                     cont++;
                 }
-                /* code */
+               
             }
             else if (J==4)
             {
-                while ((ent = readdir (dir)) != NULL) {
+                   while ((ent = readdir (dir)) != NULL) {
                     if (fake < 2){
                         fake++;
                     }
@@ -376,74 +852,235 @@ char robar (int J){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
+                       cartasmazo--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
                        printf("%s\n",naux);
                        if (nent[4]=='c'||(nent[1]=='n'&& nent[4]=='4'))
                        {
-                            int r = rand() % 4;
-                            char * play = (char * )malloc(sizeof(char)*40);
-                            strcpy(play,"juego/");
-                            if(r == 0){
-                                strcat(play,"_roj_.txt");
+                           while (1)
+                           {
+                               printf("Ha obtenido la carta %s\n",nent);
+                               printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                               int op;
+                               scanf("%d",&op);
+                               printf("\n");
+                                if (op==1)
+                                {     
+                                    while (1)
+                                    {
+                                      printf("Seleccione el color que desea:\n0.-Rojo\n1.-Verde\n2.-Azul\n3.-Amarillo\nIngrese su opcion:");
+                                        int r;
+                                        scanf("%d",&r);
+                                        if(r == 0){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_roj_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                          
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+              
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else if(r == 1){
-                                strcat(play,"_ver_.txt");
+                                            break;
 
-                            }
-                            else if(r == 2){
-                                strcat(play,"_zul_.txt");
+                                        }
+                                        else if(r == 1){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ver_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                 
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                         
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
-                            }
-                            else{
-                                strcat(play,"_ama_.txt");
-                            }
+                                            break;
 
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            FILE* file1 = fopen(play, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re = play[4];
-                            free(borrar);
-                            free(play);
-                            free(nent);
-                            free(naux);
-                            closedir(dir);
-                            if (nent[1]=='n'&& nent[4]=='4')
-                            {
-                                return 'n';
-                            }
-                            return re;
-                            break;
+                                        }
+                                        else if(r == 2){
+                                             char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_zul_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                        
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
 
+                                            break;
+
+                                        }
+                                        else if (r==3)
+                                        {
+                                            char * play = (char * )malloc(sizeof(char)*40);
+                                            strcpy(play,"juego/");
+                                            strcat(play,"_ama_.txt");
+                                            printf("La carta se ha jugado\n");
+                                            char * borrar = (char * )malloc(sizeof(char)*40);
+                                            strcpy(borrar,"juego/");
+                                            strcat(borrar,naux);
+                                            remove(borrar);
+                                      
+                                            FILE* file1 = fopen(play, "w");
+                                            fclose(file1);
+                                      
+                                            printf("Y la jugó\n");
+                                            char re = play[4];
+                                            free(borrar);
+                                            free(play);
+                                            free(nent);
+                                            free(naux);
+                                            closedir(dir);
+                                            if (nent[1]=='n'&& nent[4]=='4')
+                                            {
+                                                return 'n';
+                                            }
+                                            
+                                            return re;   
+
+                                           break;
+                                        }
+                                        else
+                                        {
+                                            printf("Opción invalida, ingrese de nuevo su color.\n");
+                                        }
+                                    }
+                                    
+                                          
+                                        
+                                  
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                        char * guardar = (char * )malloc(sizeof(char)*40);
+                                        strcpy(guardar,"j4/");
+                                        strcat(guardar,ent->d_name);
+                                        FILE* file1 = fopen(guardar, "w");
+                                        fclose(file1);
+                                        free(guardar);
+                                        closedir(dir);
+                                        mano[3]++;
+
+                                        return 'x';
+                                        break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingrese nuevamente\n");
+                                }
+                           }
+                           
+                         
+                          
+
+                          
                            
                        }   
                        else if (nent[1]==naux[1]||nent[4]==naux[4])
-                       {    
-                            char * borrar = (char * )malloc(sizeof(char)*40);
-                            strcpy(borrar,"juego/");
-                            strcat(borrar,aux->d_name);
-                            remove(borrar);
-                            char * agregar= (char *)malloc(sizeof(char)*40);
-                            strcpy(agregar,"juego/");
-                            strcat(agregar,ent->d_name);
-                            FILE* file1 = fopen(agregar, "w");
-                            fclose(file1);
-                            printf("Y la jugó\n");
-                            char re = agregar[4];
-                            free(borrar);
-                            free(agregar);
-                            free(nent);
-                            free(naux);
-                             closedir(dir);
-                            return re;
-                            break;
-                       }
+                       {
+                            while (1)
+                            {
+                                /* code */
+                                printf("Ha obtenido la carta %s\n",nent);
+                                printf("Desea jugarla?\n1.- Si\n2.-No\nIngrese su opción:");
+                                int op;
+                                scanf("%d",&op);
+                                printf("\n");
+                                if(op==1){
+                                    char * borrar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(borrar,"juego/");
+                                    strcat(borrar,naux);
+                                    remove(borrar);
+                             
+                                    char * agregar= (char *)malloc(sizeof(char)*40);
+                                    strcpy(agregar,"juego/");
+                                    strcat(agregar,ent->d_name);
+                                    FILE* file1 = fopen(agregar, "w");
+                                    fclose(file1);
+                            
+                                    printf("Y la jugó\n");
+                                    char re = agregar[4];
+                                    free(borrar);
+                                    free(agregar);
+                                    free(nent);
+                                    free(naux);
+                                    closedir(dir);
+                                    return re;
+
+                                }
+                                else if(op==2){
+                                        printf("Y la guardó en su mano\n");
+                                    char * guardar = (char * )malloc(sizeof(char)*40);
+                                    strcpy(guardar,"j4/");
+                                    strcat(guardar,ent->d_name);
+                                    FILE* file1 = fopen(guardar, "w");
+                                    fclose(file1);
+                                    free(guardar);
+                                    closedir(dir);
+                                    mano[3]++;
+
+                                    return 'x';
+                                    break;
+
+                                }
+                                else{
+                                    printf("Opción invalida, ingresela nuevamente\n");
+                                }    
+                            }
+                       } 
                        else
                        {
                            printf("Y la guardó en su mano\n");
@@ -453,8 +1090,9 @@ char robar (int J){
                            FILE* file1 = fopen(guardar, "w");
                            fclose(file1);
                            free(guardar);
-                        closedir(dir);
+                            closedir(dir);
                             mano[3]++;
+
                            return 'x';
                            break;
                        }
@@ -463,7 +1101,7 @@ char robar (int J){
                     }
                     cont++;
                 }
-                /* code */
+                
             }
             else
             {
@@ -1007,5 +1645,6 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
         free(numeros[i]);
     }
     free(numeros);
+
     return 0;
 }
