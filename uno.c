@@ -7,6 +7,187 @@
 #include <dirent.h>
 #include <time.h>
 
+int mano[4] = {7,7,7,7};
+int cartasmazo = 79;
+
+char jugar(int jugador){
+    DIR *dir;
+    DIR *dir2;
+    struct dirent *ent;
+    struct dirent *ent2;
+    char color, tipo, jugada = 'x';
+    int fake = 0, done = 0, r, carta2,flag,flag2,flag3;
+    char * carta = (char * )malloc(sizeof(char)*40);
+    if ((dir = opendir ("juego")) != NULL) {
+        while ((ent = readdir(dir)) != NULL) {
+             if (strcmp(ent->d_name,".") == 0 || strcmp(ent->d_name,"..") == 0 ){
+                fake++;
+            }
+            else{
+                strcpy(carta,ent->d_name);
+                
+            }
+        }
+    }
+    color = carta[1];
+    tipo = carta[4];
+    printf("La carta en el pozo es %s\n",carta);
+    printf("Tus cartas son: \n");
+    int cont = 0;
+    char** cartasmano;
+    cartasmano = (char**)malloc(sizeof(char*)*80);
+    char * dirplayer = (char * )malloc(sizeof(char)*40);
+    char * player = (char * )malloc(sizeof(char)*40);
+
+    if(jugador == 1){
+        strcpy(player,"j1");
+    }
+    else if(jugador == 2){
+        strcpy(player,"j2");
+    }
+    else if(jugador == 3){
+        strcpy(player,"j3");
+    }
+    else{
+        strcpy(player,"j4");
+    }
+    if ((dir2 = opendir(player)) != NULL) {
+        while ((ent2 = readdir(dir2)) != NULL) {
+            if (strcmp(ent2->d_name,".") == 0 || strcmp(ent2->d_name,"..") ==0 ){
+                fake++;
+            }
+            else{
+                cartasmano[cont] = (char*)malloc(sizeof(char)*40);
+                strcpy(cartasmano[cont],ent2->d_name);
+                if(cartasmano[cont][1] == 'n' || cartasmano[cont][1] == color || cartasmano[cont][4] == tipo){
+                    done = 1;
+                }
+                cont++;
+                printf("%d.-%s\n",cont,ent2->d_name);
+            }
+        }
+    }
+    cartasmano[cont] = (char*)malloc(sizeof(char)*40);
+    strcpy(cartasmano[cont],"###");
+    flag = 1;
+    while(flag){
+        flag2 = 1;
+        while(flag2){
+            printf("Ingrese el numero de la carta que desea jugar: ");
+            scanf("%d", &carta2);
+            printf("\n");
+            if(carta2 <= cont && carta2 > 0){
+                flag2--;
+            }
+            else{
+                printf("Ingrese un numero valido\n");
+            }   
+        }
+        carta2--;
+        if(cartasmano[carta2][1] == 'n'){
+            if(cartasmano[carta2][4]=='4'){
+                jugada = 'n';
+            }
+            else{
+                jugada = cartasmano[carta2][4];
+            }
+            flag3 = 1;
+            while(flag3){    
+                printf("Escoja el numero del color:\n1.- Rojo\n2.- Verde\n3.- Azul\n4.- Amarillo\n");
+                scanf("%d",&r);
+                if(r <= 4 && r > 0){
+                    flag3--;
+                }
+                else{
+                    printf("Ingrese un numero valido");
+                }
+            }
+            r--;
+            char * play = (char * )malloc(sizeof(char)*40);
+            strcpy(play,"juego/");
+            if(r == 0){
+                strcat(play,"_roj_.txt");
+
+            }
+            else if(r == 1){
+                strcat(play,"_ver_.txt");
+
+            }
+            else if(r == 2){
+                strcat(play,"_zul_.txt");
+
+            }
+            else{
+                strcat(play,"_ama_.txt");
+            }
+            FILE* archivo= fopen(play,"w");
+            fclose(archivo);
+            char * borrar = (char * )malloc(sizeof(char)*40);
+            strcpy(dirplayer,player);
+            strcat(dirplayer,"/");
+            strcpy(borrar,dirplayer);
+            strcat(borrar,cartasmano[carta2]);
+            remove(borrar);
+            free(play);
+            free(borrar);
+            mano[jugador-1]--;
+            flag--;                                                                              
+        }
+        else if(cartasmano[carta2][1] == color || cartasmano[carta2][4] == tipo){
+            jugada = cartasmano[carta2][4];
+            char * play = (char * )malloc(sizeof(char)*40);
+            strcpy(play,"juego/");
+            strcat(play,cartasmano[carta2]);
+            FILE* archivo= fopen(play,"w");
+            fclose(archivo);
+            char * borrar = (char * )malloc(sizeof(char)*40);
+            strcpy(dirplayer,player);
+            strcat(dirplayer,"/");
+            strcpy(borrar,dirplayer);
+            strcat(borrar,cartasmano[carta2]);
+            remove(borrar);
+            free(play);
+            free(borrar);
+            mano[jugador-1]--;
+            flag--;
+        }
+        else{
+            printf("Jugada invalida\n");
+        }
+    }
+    
+    cont = 0;
+    while(strcmp(cartasmano[cont],"###")){
+        free(cartasmano[cont]);
+        cont++;
+    }
+    free(cartasmano);
+    
+    if(done){
+        char * borrar = (char * )malloc(sizeof(char)*40);
+        strcpy(borrar,"juego/");
+        strcat(borrar,carta);
+        remove(borrar);
+        free(borrar);
+        free(player);
+        free(dirplayer);
+        free(carta);
+        closedir(dir);
+        closedir(dir2);
+        return(jugada);
+    }
+    else{
+        printf("Robas carta\n");
+        free(player);
+        free(dirplayer);
+        free(carta);
+        closedir(dir);
+        closedir(dir2);
+        return jugada; 
+        //robar(jugador);
+    }    
+}
+
 int main()
 {
 
@@ -171,8 +352,8 @@ Creación de todas las cartas del mazo
         strcpy(archivo2,"mazo/2");
         strcat(archivo,colores[i]);
         strcat(archivo2,colores[i]);
-        strcat(archivo,"c.txt");
-        strcat(archivo2,"c.txt");
+        strcat(archivo,"b.txt");
+        strcat(archivo2,"b.txt");
         FILE* file5 = fopen(archivo, "w");
         fclose(file5);
         FILE* file6 = fopen(archivo2, "w");
@@ -534,6 +715,10 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
         free(numeros[i]);
     }
     free(numeros);
+    for(i = 0; i < 15; i++){
+        jugar(1);
+    }
+    printf("%d\n",mano[0]);
 
     return 0;
 }
