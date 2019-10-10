@@ -7,7 +7,11 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <time.h>
-
+int cartasmazo=79;
+int mano[4] = {7,7,7,7};
+char jugar(int a){
+    return 'x';
+}
 void robarN (int J , int n){
     int iteraciones;
 
@@ -69,10 +73,10 @@ void robarN (int J , int n){
                              /* code */
                          }
                          strcat(direccion,ent->d_name);
-                         FILE *F=fopen(direccion,'w');
+                         FILE *F=fopen(direccion,"w");
                          fclose(F); 
                          free(direccion);
-                         iteraciones-;                  
+                         iteraciones--;                  
                          break;
                     }
                 }
@@ -85,6 +89,9 @@ void robarN (int J , int n){
     cartasmazo-=cartas;
 
 }
+
+
+
 char leerPozo(){
      DIR *dir;
 
@@ -234,80 +241,267 @@ int main(int argc, char const *argv[])
 
 int cont=1;
 int reversa=0;
-char jugada, reverse;
+char jugada;
+int r;
+int flag3;
 while (1)
 {
     while(id==idH1){
 
         //Player 2
+        char mensaje1 [11];
+        while(read(tuberia12[0],mensaje1,12)<0 && read(tuberia32[0],mensaje1,12)<0);
+        int i;
+        int aux;
+        for (size_t i = 0; i < 4; i++)
+        {
+            //Or more readable: 'int x = character - '0'
+            aux = mensaje1[i]-'0';
+         
+            mano[i]=aux;
+        }
+        if(mensaje1[5]=='0'){
+            //sscanf(mensaje1[6],"%d",&cartasmazo);
+            cartasmazo= mensaje1[6] -'0';
+        }
+        else
+        {
+            char maux[2];
+            maux[0]=mensaje1[5];
+            maux[1]=mensaje1[6];
+            sscanf(maux,"%d",&cartasmazo);
+        }
 
-        if(reversa==0){
+        reversa=mensaje1[10] - '0';
+        if (mensaje1[8]=='b')
+        {
+            printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='n')
+        {
+            printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
+            robarN(2,4);
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='p')
+        {
+            printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+            robarN(2,2);
+            jugada = 'x';
+        }
+        else
+        {
+            jugada = jugar(2);
+        }
+    
+
+        char mensaje[11];
+    
+
+        for ( i = 0; i < 4; i++)
+        {
+            sprintf(mensaje,"%d",mano[i]);
+        }
+        strcat(mensaje, "_");
+        if (cartasmazo < 10)
+        {
+            sprintf(mensaje,"%d",0);
+            sprintf(mensaje,"%d",cartasmazo);
+        }
+        else sprintf(mensaje,"%d",cartasmazo);
+
+        strcat(mensaje, "_");
+        char caux[2];caux[0]=jugada;caux[1]='\0';
+        
+        strcat(mensaje, caux);
+        strcat(mensaje, "_");
+        sprintf(mensaje,"%d",reversa);
+        
+    
+        if(reversa==0){                    
+            write(tuberia23[1], mensaje, (strlen(mensaje)+1));
 
         }
-        else{
-
+        else{       
+            write(tuberia21[1], mensaje, (strlen(mensaje)+1));
         }
+       
     }
 
     while (id==idH2)
     {
         //Player 3
-        if(reversa==0){
+        char mensaje1 [11];
+        while(read(tuberia43[0],mensaje1,12)<0 && read(tuberia23[0],mensaje1,12)<0);
+        int i;
+        int aux;
+        for (size_t i = 0; i < 4; i++)
+        {
+            //Or more readable: 'int x = character - '0'
+            aux = mensaje1[i]-'0';
+         
+            mano[i]=aux;
+        }
+        if(mensaje1[5]=='0'){
+            //sscanf(mensaje1[6],"%d",&cartasmazo);
+            cartasmazo= mensaje1[6] -'0';
+        }
+        else
+        {
+            char maux[2];
+            maux[0]=mensaje1[5];
+            maux[1]=mensaje1[6];
+            sscanf(maux,"%d",&cartasmazo);
+        }
+
+        reversa=mensaje1[10] - '0';
+        if (mensaje1[8]=='b')
+        {
+            printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='n')
+        {
+            printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
+            robarN(3,4);
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='p')
+        {
+            printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+            robarN(3,2);
+            jugada = 'x';
+        }
+        else
+        {
+            jugada = jugar(3);
+        }
+    
+
+        char mensaje[11];
+
+        for ( i = 0; i < 4; i++)
+        {
+            sprintf(mensaje,"%d",mano[i]);
+        }
+        strcat(mensaje, "_");
+        if (cartasmazo < 10)
+        {
+            sprintf(mensaje,"%d",0);
+            sprintf(mensaje,"%d",cartasmazo);
+        }
+        else sprintf(mensaje,"%d",cartasmazo);
+
+        strcat(mensaje, "_");
+        char caux[2];caux[0]=jugada;caux[1]='\0';
+        
+        strcat(mensaje, caux);
+        strcat(mensaje, "_");
+        sprintf(mensaje,"%d",reversa);
+        if(reversa==0){                    
+            write(tuberia34[1], mensaje, (strlen(mensaje)+1));
 
         }
-        else{
-            
+        else{       
+            write(tuberia32[1], mensaje, (strlen(mensaje)+1));
         }
+       
+       
     }
     while (id==idH3)
     {
-       //Player 4
-       if(reversa==0){
+        //Player 4
+        printf("TURNO DEL JUGADOR 4");
+       char mensaje1 [11];
+        while(read(tuberia34[0],mensaje1,12)<0 && read(tuberia14[0],mensaje1,12)<0);
+       int i;
+        int aux;
+        for (size_t i = 0; i < 4; i++)
+        {
+            //Or more readable: 'int x = character - '0'
+            aux = mensaje1[i]-'0';
+         
+            mano[i]=aux;
+        }
+        if(mensaje1[5]=='0'){
+            //sscanf(mensaje1[6],"%d",&cartasmazo);
+            cartasmazo= mensaje1[6] -'0';
+        }
+        else
+        {
+            char maux[2];
+            maux[0]=mensaje1[5];
+            maux[1]=mensaje1[6];
+            sscanf(maux,"%d",&cartasmazo);
+        }
+
+        reversa=mensaje1[10] - '0';
+        if (mensaje1[8]=='b')
+        {
+            printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='n')
+        {
+            printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
+            robarN(4,4);
+            jugada = 'x';
+        }
+        else if (mensaje1[8]=='p')
+        {
+            printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+            robarN(4,2);
+            jugada = 'x';
+        }
+        else
+        {
+            jugada = jugar(4);
+        }
+    
+
+        char mensaje[11];
+
+        for ( i = 0; i < 4; i++)
+        {
+            sprintf(mensaje,"%d",mano[i]);
+        }
+        strcat(mensaje, "_");
+        if (cartasmazo < 10)
+        {
+            sprintf(mensaje,"%d",0);
+            sprintf(mensaje,"%d",cartasmazo);
+        }
+        else sprintf(mensaje,"%d",cartasmazo);
+
+        strcat(mensaje, "_");
+        char caux[2];caux[0]=jugada;caux[1]='\0';
+        
+        strcat(mensaje, caux);
+        strcat(mensaje, "_");
+        sprintf(mensaje,"%d",reversa);
+    
+        if(reversa==0){                    
+            write(tuberia41[1], mensaje, (strlen(mensaje)+1));
 
         }
-        else{
-            
+        else{       
+            write(tuberia43[1], mensaje, (strlen(mensaje)+1));
         }
+       
     }
     while (1)
     {
+        printf("TURNO DE JUGADOR 1");
         if(cont==1){
+            cont++;
             char c = leerPozo();
             if (c=='z')
             {
                 robarN(1,4);
                 jugada = 'x';
                 flag3 = 1;
-                printf("\n En el pozo hay un +4\n")
-                while(flag3){    
-                    printf("Escoja el numero del color:\n1.- Rojo\n2.- Verde\n3.- Azul\n4.- Amarillo\n");
-                    scanf("%d",&r);
-                    if(r <= 4 && r > 0){
-                        flag3--;
-                    }
-                    else{
-                        printf("Ingrese un numero valido");
-                    }
-                }
-            }
-            else if (c=='p')
-            {
-                robarN(1,2);
-                jugada = 'x';
-            }
-            else if (c=='b')
-            {
-                jugada = 'x';
-            }
-            else if (c=='r')
-            {
-                reversa = 1;
-                jugada = jugar(1);
-            }
-            else if (c=='c')
-            {
-                flag3 = 1;
-                printf("\n En el pozo hay un cambiocolor\n")
+                printf("\n En el pozo hay un +4\n");
                 while(flag3){    
                     printf("Escoja el numero del color:\n1.- Rojo\n2.- Verde\n3.- Azul\n4.- Amarillo\n");
                     scanf("%d",&r);
@@ -338,7 +532,56 @@ while (1)
                 FILE* archivo= fopen(play,"w");
                 fclose(archivo);
                 free(play);
-                jugar(1);
+            }
+            else if (c=='p')
+            {
+                robarN(1,2);
+                jugada = 'x';
+            }
+            else if (c=='b')
+            {
+                jugada = 'x';
+            }
+            else if (c=='r')
+            {
+                reversa = 1;
+                jugada = jugar(1);
+            }
+            else if (c=='c')
+            {
+                int flag3 = 1;
+                printf("\n En el pozo hay un cambiocolor\n");
+                while(flag3){    
+                    printf("Escoja el numero del color:\n1.- Rojo\n2.- Verde\n3.- Azul\n4.- Amarillo\n");
+                    scanf("%d",&r);
+                    if(r <= 4 && r > 0){
+                        flag3--;
+                    }
+                    else{
+                        printf("Ingrese un numero valido");
+                    }
+                }
+                char * play = (char * )malloc(sizeof(char)*40);
+                strcpy(play,"juego/");
+                if(r == 0){
+                    strcat(play,"_roj_.txt");
+
+                }
+                else if(r == 1){
+                    strcat(play,"_ver_.txt");
+
+                }
+                else if(r == 2){
+                    strcat(play,"_zul_.txt");
+
+                }
+                else{
+                    strcat(play,"_ama_.txt");
+                }
+                FILE* archivo= fopen(play,"w");
+                fclose(archivo);
+                free(play);
+                jugada=jugar(1);
                 
             }
                   
@@ -346,49 +589,91 @@ while (1)
             {
                 jugada = jugar(1);
             }
+
+
             
         }
-        if(reversa==0){
-            char mensaje[40];
-            if(jugada == 'x'){
-                reverse = (char)reversa;
-                strcpy(mensaje, "6777_79_");
-                strcat(mensaje, jugada);
-                strcat(mensaje, "_");
-                strcat(mensaje, reverse);
-                write(tuberia12[1], mensaje, (strlen(mensaje)+1));
-            }
-            else{
-                reverse = (char)reversa;
-                strcpy(mensaje, "7777_79_");
-                strcat(mensaje, jugada);
-                strcat(mensaje, "_");
-                strcat(mensaje, reverse);
-            }
+        else{
+            char mensaje1 [11];
+            while(read(tuberia21[0],mensaje1,12)<0 && read(tuberia41[0],mensaje1,12)<0);
+            int i;
+            int aux;
+            for (size_t i = 0; i < 4; i++)
+            {
+                //Or more readable: 'int x = character - '0'
+                aux = mensaje1[i]-'0';
             
+                mano[i]=aux;
+            }
+            if(mensaje1[5]=='0'){
+                //sscanf(mensaje1[6],"%d",&cartasmazo);
+                cartasmazo= mensaje1[6] -'0';
+            }
+            else
+            {
+                char maux[2];
+                maux[0]=mensaje1[5];
+                maux[1]=mensaje1[6];
+                sscanf(maux,"%d",&cartasmazo);
+            }
+
+            reversa=mensaje1[10] - '0';
+            if (mensaje1[8]=='b')
+            {
+                printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
+                jugada = 'x';
+            }
+            else if (mensaje1[8]=='n')
+            {
+                printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
+                robarN(1,4);
+                jugada = 'x';
+            }
+            else if (mensaje1[8]=='p')
+            {
+                printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+                robarN(1,2);
+                jugada = 'x';
+            }
+            else
+            {
+                jugada = jugar(1);
+            }
+    
+        }
+
+        char mensaje[11];
+    
+        int i;
+        for ( i = 0; i < 4; i++)
+        {
+            sprintf(mensaje,"%d",mano[i]);
+        }
+        strcat(mensaje, "_");
+        if (cartasmazo < 10)
+        {
+            sprintf(mensaje,"%d",0);
+            sprintf(mensaje,"%d",cartasmazo);
+        }
+        else sprintf(mensaje,"%d",cartasmazo);
+
+        strcat(mensaje, "_");
+        char caux[2];caux[0]=jugada;caux[1]='\0';
+        
+        strcat(mensaje, caux);
+        strcat(mensaje, "_");
+        sprintf(mensaje,"%d",reversa);
+    
+        
+    
+        if(reversa==0){                    
             write(tuberia12[1], mensaje, (strlen(mensaje)+1));
 
         }
-        else{
-            char mensaje[40];
-            if(jugada == 'x'){
-                reverse = (char)reversa;
-                strcpy(mensaje, "6777_79_");
-                strcat(mensaje, jugada);
-                strcat(mensaje, "_");
-                strcat(mensaje, reverse);
-                write(tuberia14[1], mensaje, (strlen(mensaje)+1));
-            }
-            else{
-                reverse = (char)reversa;
-                strcpy(mensaje, "7777_79_");
-                strcat(mensaje, jugada);
-                strcat(mensaje, "_");
-                strcat(mensaje, reverse);
-            }
-            
+        else{       
             write(tuberia14[1], mensaje, (strlen(mensaje)+1));
         }
+       
         
     }
 }
@@ -464,7 +749,7 @@ while (1)
     
 
         char mensaje[10];
-        while(read(tuberia12[0],mensaje,9)<0);
+        
         printf("Hola soy  el padre");
         printf("%s",mensaje);
     }
