@@ -22,15 +22,15 @@ void cambioColor(){
     }
     char play[40];
     strcpy(play,"juego/");
-    if(r == 0){
+    if(r == 1){
         strcat(play,"_roj_.txt");
 
     }
-    else if(r == 1){
+    else if(r == 2){
         strcat(play,"_ver_.txt");
 
     }
-    else if(r == 2){
+    else if(r == 3){
         strcat(play,"_zul_.txt");
 
     }
@@ -70,26 +70,26 @@ char leerPozo(){
 }
 
 
-void robarN (int J , int n){
+void robarN (int J , int n, int* cartasmazo, int* mano){
+    printf("XDSUE");
     int iteraciones;
-
-    if (cartasmazo < n){
-        iteraciones=cartasmazo;
+    if (*cartasmazo < n){
+        iteraciones=*cartasmazo;
     }else{
         iteraciones=n;
     }
 
     int sualazar[iteraciones];
     int i;
-    
+    printf("xddd");
     for (i = 0; i < iteraciones; i++) {
-        int r = rand() % cartasmazo+1;
+        int r = rand() % (*cartasmazo)+1;
         int i2;
         for ( i2 = 0; i2 < i; i2++)
         {
             if(r==sualazar[i2]){
                 i2--;
-                 r= rand() % cartasmazo+1;
+                 r= rand() % (*cartasmazo)+1;
             }
             
         }              
@@ -101,6 +101,7 @@ void robarN (int J , int n){
     int cont,k;
     int fake = 0;
     int cartas=iteraciones;
+    printf("leere ekisde");
 
     if ((dir = opendir ("juego")) != NULL ) {
         while ((ent = readdir(dir)) != NULL||iteraciones !=0) {
@@ -145,12 +146,13 @@ void robarN (int J , int n){
     }
     closedir(dir);
     cartasmazo-=cartas;
+    mano += cartas;
 
 }
 void crearArchivos(){
         /*
 
-Creación de carpetas que albergaran los mazos y las manos de los jugadores.
+    Creación de carpetas que albergaran los mazos y las manos de los jugadores.
 
     */
     struct stat st = {0};
@@ -172,13 +174,13 @@ Creación de carpetas que albergaran los mazos y las manos de los jugadores.
     if (stat("juego", &st) == -1) {
         mkdir("juego", 0700);
     }
-/*
+    /*
 
 
-Creación de string con números
+    Creación de string con números
 
 
-*/
+    */
     char ** numeros = (char **)malloc(sizeof(char *)*10);
     int i = 0;
     for ( i = 0; i < 10; i++)
@@ -248,7 +250,7 @@ Creación de string con números
     /*
 
 
-Creación de string de colores
+    Creación de string de colores
 
     */
     char ** colores = (char **)malloc(sizeof(char*)*4);
@@ -277,7 +279,7 @@ Creación de string de colores
 
     /*
 
-Creación de todas las cartas del mazo
+    Creación de todas las cartas del mazo
 
     */
 
@@ -367,11 +369,11 @@ Creación de todas las cartas del mazo
     fclose(file7);
     fclose(file8);
 
-/*
+    /*
 
-Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de juego.
+    Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de juego.
 
-*/
+    */
 
 
     srand(time(NULL));
@@ -599,7 +601,7 @@ Repartir las cartas al azar a todos los jugadores y una carta al azar al pozo de
     free(numeros);
 }
 
-char robar (int J, int* cartas){
+char robar (int J, int* cartasmazo, int* cartas){
     sleep(1);
     DIR *dir;
     struct dirent *ent;
@@ -608,8 +610,8 @@ char robar (int J, int* cartas){
     char * naux = (char * )malloc(sizeof(char)*40);
     int fake=0;
     int cont=0;
-    int random= rand() % (cartasmazo+1);
-    if(cartasmazo<=0){
+    int random= rand() % (*cartasmazo+1);
+    if(*cartasmazo<=0){
         printf("El jugador %d no puede robar carta, ya que el mazo está vacío",J);
         free(nent);
         free(naux);
@@ -649,7 +651,7 @@ char robar (int J, int* cartas){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
-                       cartasmazo--;
+                       (*cartasmazo)--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                  
@@ -908,7 +910,7 @@ char robar (int J, int* cartas){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
-                       cartasmazo--;
+                       (*cartasmazo)--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
@@ -1172,7 +1174,7 @@ char robar (int J, int* cartas){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
-                       cartasmazo--;
+                       (*cartasmazo)--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
@@ -1436,7 +1438,7 @@ char robar (int J, int* cartas){
                        strcat(mazo,ent->d_name);
                        remove(mazo);
                        free(mazo);
-                       cartasmazo--;
+                       (*cartasmazo)--;
                        printf("El jugador %d robó la carta %s\n",J,ent->d_name);
                        strcpy(nent,ent->d_name);
                        printf("%s\n",nent);
@@ -1702,7 +1704,7 @@ char robar (int J, int* cartas){
     return 'M';
 }
 
-char jugar(int jugador, int* cartas){
+char jugar(int jugador, int* cartasmazo, int* cartas){
     DIR *dir;
     DIR *dir2;
     struct dirent *ent;
@@ -1864,6 +1866,9 @@ char jugar(int jugador, int* cartas){
     free(cartasmano);
     
     if(done){
+        if(*cartas == 1){
+            printf("UNO\nAl jugador %d le queda una carta!!!",jugador);
+        }
         char * borrar = (char * )malloc(sizeof(char)*40);
         strcpy(borrar,"juego/");
         strcat(borrar,carta);
@@ -1883,13 +1888,13 @@ char jugar(int jugador, int* cartas){
         free(carta);
         closedir(dir);
         closedir(dir2);
-        return robar(jugador, cartas);
+        return robar(jugador, cartasmazo, cartas);
     }    
 }
 
 int main()
 {
-    crearArchivos();
+    //crearArchivos();
     int tuberia12[2];
     int tuberia21[2];
     int tuberia23[2];
@@ -2047,20 +2052,18 @@ int main()
         else if (mensaje1[5]=='n')
         {
             printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
-            robarN(2,4);
-            cartas += 4;
+            robarN(2,4, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else if (mensaje1[5]=='p')
         {
             printf("EL JUGADOR 2 ROBA 2 CARTAS\n");
-            robarN(2,2);
-            cartas += 4;
+            robarN(2,2, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else
         {
-            jugada = jugar(2,&cartas);
+            jugada = jugar(2, &cartasmazo, &cartas);
         }
     
         if(cartas == 0){
@@ -2118,7 +2121,7 @@ int main()
         //Player 3
 
         char mensaje1 [7];
-        while((read(tuberia12[0],mensaje1,7)<=0) && (read(tuberia32[0],mensaje1,7)<=0));
+        while((read(tuberia23[0],mensaje1,7)<=0) && (read(tuberia43[0],mensaje1,7)<=0));
 
         printf("\nTURNO DEL JUGADOR 3\n");
 
@@ -2146,20 +2149,18 @@ int main()
         else if (mensaje1[5]=='n')
         {
             printf("EL JUGADOR 3 ROBA 4 CARTAS\n");
-            robarN(3,4);
-            cartas += 4;
+            robarN(3,4, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else if (mensaje1[5]=='p')
         {
             printf("EL JUGADOR 3 ROBA 2 CARTAS\n");
-            robarN(3,2);
-            cartas += 2;
+            robarN(3,2, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else
         {
-            jugada = jugar(3, &cartas);
+            jugada = jugar(3, &cartasmazo, &cartas);
         }
     
         if(cartas == 0){
@@ -2216,7 +2217,7 @@ int main()
         //Player 4
         
         char mensaje1 [7];
-        while((read(tuberia12[0],mensaje1,12)<=0) && (read(tuberia32[0],mensaje1,7)<=0));
+        while((read(tuberia34[0],mensaje1,12)<=0) && (read(tuberia14[0],mensaje1,7)<=0));
 
         printf("\nTURNO DEL JUGADOR 4\n");
 
@@ -2244,20 +2245,18 @@ int main()
         else if (mensaje1[5]=='n')
         {
             printf("EL JUGADOR 4 ROBA 4 CARTAS\n");
-            robarN(4,4);
-            cartas += 4;
+            robarN(4,4, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else if (mensaje1[5]=='p')
         {
             printf("EL JUGADOR 4 ROBA 2 CARTAS\n");
-            robarN(4,2);
-            cartas += 2;
+            robarN(4,2, &cartasmazo, &cartas);
             jugada = 'x';
         }
         else
         {
-            jugada = jugar(4, &cartas);
+            jugada = jugar(4, &cartasmazo, &cartas);
         }
 
         if(cartas == 0){
@@ -2317,38 +2316,41 @@ int main()
             char c = leerPozo();
             if (c=='z')
             {
-                robarN(1,4);
-                cartas += 4;
-                jugada = 'x';
                 printf("En el pozo hay un +4\n");
+                printf("EL JUGADOR 1 ROBA 4 CARTAS\n");
+                robarN(1,4, &cartasmazo, &cartas);
+                jugada = 'x';
                 cambioColor();
             }
             else if (c=='p')
-            {
-                robarN(1,2);
-                cartas += 2;
+            {   
+                printf("En el pozo hay un +2\n");
+                printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+                robarN(1,2, &cartasmazo, &cartas);
                 jugada = 'x';
             }
             else if (c=='b')
             {
+                printf("En el pozo hay un bloqueo\n");
+                printf("EL JUGADOR HA SIDO BLOQUEADO\n");
                 jugada = 'x';
             }
             else if (c=='r')
             {
                 reversa = 1;
-                jugada = jugar(1, &cartas);
+                jugada = jugar(1, &cartasmazo, &cartas);
             }
             else if (c=='c')
             {
                 printf("En el pozo hay un cambiocolor\n");
                 cambioColor();
-                jugada=jugar(1, &cartas);
+                jugada=jugar(1, &cartasmazo, &cartas);
                 
             }
                 
             else
             {
-                jugada = jugar(1, &cartas);
+                jugada = jugar(1, &cartasmazo, &cartas);
             }
 
 
@@ -2356,7 +2358,7 @@ int main()
         }
         else{
             char mensaje1 [7];
-            while((read(tuberia12[0],mensaje1,7)<=0) && (read(tuberia32[0],mensaje1,7)<=0));
+            while((read(tuberia21[0],mensaje1,7)<=0) && (read(tuberia41[0],mensaje1,7)<=0));
 
             printf("\nTURNO DE JUGADOR 1\n");
 
@@ -2385,20 +2387,18 @@ int main()
             else if (mensaje1[5]=='n')
             {
                 printf("EL JUGADOR 1 ROBA 4 CARTAS\n");
-                robarN(1,4);
-                cartas += 4;
+                robarN(1,4, &cartasmazo, &cartas);
                 jugada = 'x';
             }
             else if (mensaje1[5]=='p')
             {
                 printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
-                robarN(1,2);
-                cartas += 2;
+                robarN(1,2, &cartasmazo, &cartas);
                 jugada = 'x';
             }
             else
             {
-                jugada = jugar(1, &cartas);
+                jugada = jugar(1, &cartasmazo, &cartas);
             }
     
         }
