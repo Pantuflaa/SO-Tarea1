@@ -6,7 +6,8 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <time.h>
-int cartasmazo = 79;
+
+
 
 void cambioColor(){
     int r, flag3 = 1;
@@ -71,7 +72,7 @@ char leerPozo(){
 
 
 void robarN (int J , int n, int* cartasmazo, int* mano){
-    printf("XDSUE");
+
     int iteraciones;
     if (*cartasmazo < n){
         iteraciones=*cartasmazo;
@@ -81,7 +82,7 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
 
     int sualazar[iteraciones];
     int i;
-    printf("xddd");
+  
     for (i = 0; i < iteraciones; i++) {
         int r = rand() % (*cartasmazo)+1;
         int i2;
@@ -101,9 +102,9 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
     int cont,k;
     int fake = 0;
     int cartas=iteraciones;
-    printf("leere ekisde");
 
-    if ((dir = opendir ("juego")) != NULL ) {
+
+    if ((dir = opendir ("mazo")) != NULL ) {
         while ((ent = readdir(dir)) != NULL||iteraciones !=0) {
             if (strcmp(ent->d_name,".") == 0 || strcmp(ent->d_name,"..") == 0 ){
                 fake++;
@@ -145,7 +146,7 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
         }
     }
     closedir(dir);
-    cartasmazo-=cartas;
+    (*cartasmazo)-=cartas;
     mano += cartas;
 
 }
@@ -1821,14 +1822,14 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
                 else{
                     strcat(play,"_ama_.txt");
                 }
-                FILE* archivo= fopen(play,"w");
-                fclose(archivo);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(dirplayer,player);
                 strcat(dirplayer,"/");
                 strcpy(borrar,dirplayer);
                 strcat(borrar,cartasmano[carta2]);
                 remove(borrar);
+                FILE* archivo= fopen(play,"w");
+                fclose(archivo);
                 free(play);
                 free(borrar);
                 (*cartas)--;
@@ -1839,14 +1840,14 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
                 char * play = (char * )malloc(sizeof(char)*40);
                 strcpy(play,"juego/");
                 strcat(play,cartasmano[carta2]);
-                FILE* archivo= fopen(play,"w");
-                fclose(archivo);
                 char * borrar = (char * )malloc(sizeof(char)*40);
                 strcpy(dirplayer,player);
                 strcat(dirplayer,"/");
                 strcpy(borrar,dirplayer);
                 strcat(borrar,cartasmano[carta2]);
                 remove(borrar);
+                FILE* archivo= fopen(play,"w");
+                fclose(archivo);
                 free(play);
                 free(borrar);
                 (*cartas)--;
@@ -1894,7 +1895,7 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
 
 int main()
 {
-    //crearArchivos();
+    crearArchivos();
     int tuberia12[2];
     int tuberia21[2];
     int tuberia23[2];
@@ -1913,10 +1914,12 @@ int main()
     pipe(tuberia14);
 
     int cartas = 7;
-    int idP = getpid();
+    int cartasmazo = 79;
+
     int idH1=-1;
     int idH2=-1;
     int idH3=-1;
+    int idP =-1;
     idH1=fork();
     if (idH1!=0)
     {
@@ -1925,6 +1928,9 @@ int main()
             idH3= fork();
             if(idH3==0){
                 idH3 = getpid();
+            }
+            else{
+                idP = getpid();
             }
         }
         else
@@ -1993,7 +1999,7 @@ int main()
         close(tuberia34[1]);
         close(tuberia43[0]);
     }
-    else{
+    else if(id == idP){
 
         //Player 1
         close(tuberia21[1]);
@@ -2015,7 +2021,7 @@ int main()
     }
 
     int cont=1;
-    int reversa=0;
+    int reversa = 0;
     char jugada;
     int ganador = 0;
 
@@ -2023,8 +2029,8 @@ int main()
     while(id==idH1){
 
         //Player 2
-        char mensaje1 [7];
-        while((read(tuberia12[0],mensaje1,7)<=0) && (read(tuberia32[0],mensaje1,7)<=0));
+        char* mensaje1 = (char*)malloc(sizeof(char)*7);
+        while(read(tuberia12[0],mensaje1,7) <= 0);
         
         printf("\nTURNO DEL JUGADOR 2\n");
 
@@ -2033,95 +2039,99 @@ int main()
             break;
         }
 
-        if(mensaje1[0]=='0'){
-            //sscanf(mensaje1[6],"%d",&cartasmazo);
-            cartasmazo= mensaje1[1] -'0';
-        }
-        else
-        {
-            cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
-            
-        }
-
         reversa=mensaje1[3] - '0';
-        if (mensaje1[5]=='b')
-        {
-            printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
-            jugada = 'x';
+        if(mensaje1[3]-'0' != 0 && mensaje1[3]-'0' != 2){
+           write(tuberia23[1],mensaje1,7);
         }
-        else if (mensaje1[5]=='n')
-        {
-            printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
-            robarN(2,4, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else if (mensaje1[5]=='p')
-        {
-            printf("EL JUGADOR 2 ROBA 2 CARTAS\n");
-            robarN(2,2, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else
-        {
-            jugada = jugar(2, &cartasmazo, &cartas);
-        }
-    
-        if(cartas == 0){
-            write(tuberia23[1], "DOMCCC", 7);
-            ganador = 2;
-            break;
-        }
-        
-        if(cartasmazo == 0){
-            write(tuberia23[1], "DOMCCC", 7);
-            printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
-            break;
-        }
-        char mensaje[7];
-    
-
-        if (cartasmazo < 10)
-        {
-            sprintf(mensaje,"%d%d",0,cartasmazo);
-        }
-        else sprintf(mensaje,"%d",cartasmazo);
-
-        strcat(mensaje, "_");
-        char caux[2];
-        caux[0]=jugada;
-        caux[1]='\0';
-        
-        strcat(mensaje, caux);
-        strcat(mensaje, "_");
-
-        if(jugada == 'r'){
-            if(reversa){
-                reversa = 0;
+        else{
+            if(mensaje1[0]=='0'){
+                //sscanf(mensaje1[6],"%d",&cartasmazo);
+                cartasmazo= mensaje1[1] -'0';
             }
-            else{
-                reversa = 1;
+            else
+            {
+                cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
+                
             }
-        }
 
-        sprintf(mensaje,"%s%d",mensaje,reversa);
+            if (mensaje1[5]=='b')
+            {
+                printf("EL JUGADOR 2 HA SIDO BLOQUEADO\n");
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='n')
+            {
+                printf("EL JUGADOR 2 ROBA 4 CARTAS\n");
+                robarN(2,4, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='p')
+            {
+                printf("EL JUGADOR 2 ROBA 2 CARTAS\n");
+                robarN(2,2, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else
+            {
+                jugada = jugar(2, &cartasmazo, &cartas);
+            }
+        
+            if(cartas == 0){
+                write(tuberia23[1], "DOMCCC", 7);
+                ganador = 2;
+                break;
+            }
+            
+            if(cartasmazo == 0){
+                write(tuberia23[1], "DOMCCC", 7);
+                printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
+                break;
+            }
+            char* mensaje = (char*)malloc(sizeof(char)*7);
         
 
-        if(reversa==0){                    
+            if (cartasmazo < 10)
+            {
+                sprintf(mensaje,"%d%d",0,cartasmazo);
+            }
+            else sprintf(mensaje,"%d",cartasmazo);
+
+            strcat(mensaje, "_");        
+
+            if(jugada == 'r'){
+                if(reversa){
+                    reversa = 0;
+                }
+                else{
+                    reversa = 1;
+                }
+            }
+
+                
+            
+
+            if(reversa==0){                    
+                strcat(mensaje,"0");
+            }
+            else{       
+                strcat(mensaje,"1");
+            }
+            sprintf(mensaje,"%s_%c",mensaje,jugada);
+            printf("Mensaje enviado por jugador 2: %s\n",mensaje);
             write(tuberia23[1], mensaje, (strlen(mensaje)+1));
-
+            free(mensaje);
+            free(mensaje1);
+        
         }
-        else{       
-            write(tuberia21[1], mensaje, (strlen(mensaje)+1));
-        }
-    
     }
 
     while (id==idH2)
     {
         //Player 3
 
-        char mensaje1 [7];
-        while((read(tuberia23[0],mensaje1,7)<=0) && (read(tuberia43[0],mensaje1,7)<=0));
+        char* mensaje1 = (char*)malloc(sizeof(char)*7);
+        //int flag = 1;
+        while(read(tuberia23[0],mensaje1,7) <= 0);
 
         printf("\nTURNO DEL JUGADOR 3\n");
 
@@ -2129,95 +2139,98 @@ int main()
             write(tuberia34[1], "DOMCCC", 7);
             break;
         }
-
-        if(mensaje1[0]=='0'){
-            //sscanf(mensaje1[6],"%d",&cartasmazo);
-            cartasmazo= mensaje1[1] -'0';
-        }
-        else
-        {
-            cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
-            
-        }
-
         reversa=mensaje1[3] - '0';
-        if (mensaje1[5]=='b')
-        {
-            printf("EL JUGADOR 3 HA SIDO BLOQUEADO\n");
-            jugada = 'x';
+        if(mensaje1[3]-'0' != 0 && mensaje1[3]-'0' != 3){
+           write(tuberia34[1],mensaje1,7);
         }
-        else if (mensaje1[5]=='n')
-        {
-            printf("EL JUGADOR 3 ROBA 4 CARTAS\n");
-            robarN(3,4, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else if (mensaje1[5]=='p')
-        {
-            printf("EL JUGADOR 3 ROBA 2 CARTAS\n");
-            robarN(3,2, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else
-        {
-            jugada = jugar(3, &cartasmazo, &cartas);
-        }
-    
-        if(cartas == 0){
-            write(tuberia34[1], "DOMCCC", 7);
-            ganador = 3;
-            break;
-        }
+        else{
 
-        if(cartasmazo == 0){
-            write(tuberia34[1], "DOMCCC", 7);
-            printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
-            break;
-        }
+            if(mensaje1[0]=='0'){
+                //sscanf(mensaje1[6],"%d",&cartasmazo);
+                cartasmazo= mensaje1[1] -'0';
+            }
+            else
+            {
+                cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
+                
+            }
 
-        char mensaje[7];
-    
-        if (cartasmazo < 10)
-        {
-            sprintf(mensaje,"%d%d",0,cartasmazo);
-        }
-        else sprintf(mensaje,"%d",cartasmazo);
-
-        strcat(mensaje, "_");
-        char caux[2];
-        caux[0]=jugada;
-        caux[1]='\0';
+            if (mensaje1[5]=='b')
+            {
+                printf("EL JUGADOR 3 HA SIDO BLOQUEADO\n");
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='n')
+            {
+                printf("EL JUGADOR 3 ROBA 4 CARTAS\n");
+                robarN(3,4, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='p')
+            {
+                printf("EL JUGADOR 3 ROBA 2 CARTAS\n");
+                robarN(3,2, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else
+            {
+                jugada = jugar(3, &cartasmazo, &cartas);
+            }
         
-        strcat(mensaje, caux);
-        strcat(mensaje, "_");
-
-        if(jugada == 'r'){
-            if(reversa){
-                reversa = 0;
+            if(cartas == 0){
+                write(tuberia34[1], "DOMCCC", 7);
+                ganador = 3;
+                break;
             }
-            else{
-                reversa = 1;
+
+            if(cartasmazo == 0){
+                write(tuberia34[1], "DOMCCC", 7);
+                printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
+                break;
             }
-        }
 
-        sprintf(mensaje,"%s%d",mensaje,reversa);
+            char* mensaje = (char*)malloc(sizeof(char)*7);
+        
+            if (cartasmazo < 10)
+            {
+                sprintf(mensaje,"%d%d",0,cartasmazo);
+            }
+            else sprintf(mensaje,"%d",cartasmazo);
 
-        if(reversa==0){                    
-            write(tuberia34[1], mensaje, (strlen(mensaje)+1));
-
-        }
-        else{       
-            write(tuberia32[1], mensaje, (strlen(mensaje)+1));
-        }
+            strcat(mensaje, "_");        
     
+            if(jugada == 'r'){
+                if(reversa){
+                    reversa = 0;
+                }
+                else{
+                    reversa = 1;
+                }
+            }
+
+            
+
+            if(reversa==0){                    
+                strcat(mensaje,"0");
+            }
+            else{       
+                strcat(mensaje,"2");
+            }
+            sprintf(mensaje,"%s_%c",mensaje,jugada);
+            printf("Mensaje enviado por jugador 3: %s\n",mensaje);
+            write(tuberia34[1], mensaje, (strlen(mensaje)+1));
+            
+            free(mensaje);
+            free(mensaje1);
+        }
     
     }
     while (id==idH3)
     {
         //Player 4
         
-        char mensaje1 [7];
-        while((read(tuberia34[0],mensaje1,12)<=0) && (read(tuberia14[0],mensaje1,7)<=0));
+        char* mensaje1 = (char*)malloc(sizeof(char)*7);
+        while(read(tuberia34[0],mensaje1,7) <= 0);
 
         printf("\nTURNO DEL JUGADOR 4\n");
 
@@ -2225,92 +2238,96 @@ int main()
             write(tuberia41[1], "DOMCCC", 7);
             break;
         }
-
-        if(mensaje1[0]=='0'){
-            //sscanf(mensaje1[6],"%d",&cartasmazo);
-            cartasmazo= mensaje1[1] -'0';
-        }
-        else
-        {
-            cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
-            
-        }
-
         reversa=mensaje1[3] - '0';
-        if (mensaje1[5]=='b')
-        {
-            printf("EL JUGADOR 4 HA SIDO BLOQUEADO\n");
-            jugada = 'x';
+        if(mensaje1[3]-'0' != 0 && mensaje1[3]-'0' != 4){
+           write(tuberia41[1],mensaje1,7);
         }
-        else if (mensaje1[5]=='n')
-        {
-            printf("EL JUGADOR 4 ROBA 4 CARTAS\n");
-            robarN(4,4, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else if (mensaje1[5]=='p')
-        {
-            printf("EL JUGADOR 4 ROBA 2 CARTAS\n");
-            robarN(4,2, &cartasmazo, &cartas);
-            jugada = 'x';
-        }
-        else
-        {
-            jugada = jugar(4, &cartasmazo, &cartas);
-        }
-
-        if(cartas == 0){
-            write(tuberia41[1], "DOMCCC", 7);
-            ganador = 4;
-            break;
-        }
-
-        if(cartasmazo == 0){
-            write(tuberia41[1], "DOMCCC", 7);
-            printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
-            break;
-        }
-
-        char mensaje[7];
-    
-        if (cartasmazo < 10)
-        {
-            sprintf(mensaje,"%d%d",0,cartasmazo);
-        }
-        else sprintf(mensaje,"%d",cartasmazo);
-
-        strcat(mensaje, "_");
-        char caux[2];
-        caux[0]=jugada;
-        caux[1]='\0';
-        
-        strcat(mensaje, caux);
-        strcat(mensaje, "_");
-
-        if(jugada == 'r'){
-            if(reversa){
-                reversa = 0;
+        else{
+            if(mensaje1[0]=='0'){
+                //sscanf(mensaje1[6],"%d",&cartasmazo);
+                cartasmazo= mensaje1[1] -'0';
             }
-            else{
-                reversa = 1;
+            else
+            {
+                cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
+                
             }
-        }
 
-        sprintf(mensaje,"%s%d",mensaje,reversa);
+            if (mensaje1[5]=='b')
+            {
+                printf("EL JUGADOR 4 HA SIDO BLOQUEADO\n");
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='n')
+            {
+                printf("EL JUGADOR 4 ROBA 4 CARTAS\n");
+                robarN(4,4, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else if (mensaje1[5]=='p')
+            {
+                printf("EL JUGADOR 4 ROBA 2 CARTAS\n");
+                robarN(4,2, &cartasmazo, &cartas);
+                jugada = 'x';
+            }
+            else
+            {
+                jugada = jugar(4, &cartasmazo, &cartas);
+            }
 
+            if(cartas == 0){
+                write(tuberia41[1], "DOMCCC", 7);
+                ganador = 4;
+                break;
+            }
+
+            if(cartasmazo == 0){
+                write(tuberia41[1], "DOMCCC", 7);
+                printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
+                break;
+            }
+
+            char* mensaje = (char*)malloc(sizeof(char)*7);
         
-        if(reversa==0){                    
+            if (cartasmazo < 10)
+            {
+                sprintf(mensaje,"%d%d",0,cartasmazo);
+            }
+            else sprintf(mensaje,"%d",cartasmazo);
+
+            strcat(mensaje, "_");        
+
+            if(jugada == 'r'){
+                if(reversa){
+                    reversa = 0;
+                }
+                else{
+                    reversa = 1;
+                }
+            }
+            
+
+            
+            if(reversa==0){                    
+                strcat(mensaje,"0");
+            }
+            else{       
+                strcat(mensaje,"3");
+            }
+            sprintf(mensaje,"%s_%c",mensaje,jugada);
             write(tuberia41[1], mensaje, (strlen(mensaje)+1));
-
+            printf("Mensaje enviado por jugador 4: %s\n",mensaje);
+            free(mensaje1);
+            free(mensaje);
+            printf("XDDD\n");
         }
-        else{       
-            write(tuberia43[1], mensaje, (strlen(mensaje)+1));
-        }
-    
     }
-    while (id == idP)
-    {
+    while(id == idP)
+    {   
+        int tomc = 1;
+        printf("GOLA\n");
         if(cont==1){
+            reversa = 0;    
             printf("\nTURNO DE JUGADOR 1\n");
             cont++;
             char c = leerPozo();
@@ -2357,99 +2374,113 @@ int main()
             
         }
         else{
-            char mensaje1 [7];
-            while((read(tuberia21[0],mensaje1,7)<=0) && (read(tuberia41[0],mensaje1,7)<=0));
-
+            char* mensaje1 = (char*)malloc(sizeof(char)*7);
+            printf("potito\n");
+            while(read(tuberia41[0],mensaje1,7) <= 0);
+           /* int flag = 1;
+            while(flag){
+                printf("potito22\n");
+                if(read(tuberia21[0],mensaje1,7)>=0){
+                    flag = 0;
+                    printf("potito33\n");
+                } 
+                else if((read(tuberia41[0],mensaje1,7)>=0)){
+                    flag = 0;
+                    printf("potito44\n");
+                }
+                printf("potito55\n");
+            }*/
             printf("\nTURNO DE JUGADOR 1\n");
-
             if(strcmp(mensaje1, "DOMCCC")== 0){
                 write(tuberia12[1], "DOMCCC", 7);
                 break;
             }
-
-            if(mensaje1[0]=='0'){
-                //sscanf(mensaje1[6],"%d",&cartasmazo);
-                cartasmazo= mensaje1[1] -'0';
-            }
-            else
-            {
-                cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
-                
-            }
-
             reversa=mensaje1[3] - '0';
-
-            if (mensaje1[5]=='b')
-            {
-                printf("EL JUGADOR 1 HA SIDO BLOQUEADO\n");
-                jugada = 'x';
-            }
-            else if (mensaje1[5]=='n')
-            {
-                printf("EL JUGADOR 1 ROBA 4 CARTAS\n");
-                robarN(1,4, &cartasmazo, &cartas);
-                jugada = 'x';
-            }
-            else if (mensaje1[5]=='p')
-            {
-                printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
-                robarN(1,2, &cartasmazo, &cartas);
-                jugada = 'x';
-            }
-            else
-            {
-                jugada = jugar(1, &cartasmazo, &cartas);
-            }
-    
-        }
-
-        if(cartas == 0){
-            write(tuberia12[1], "DOMCCC", 7);
-            ganador = 1;
-            break;
-        }
-
-        if(cartasmazo == 0){
-            write(tuberia12[1], "DOMCCC", 7);
-            printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
-            break;
-        }
-
-        char mensaje[7];
-    
-        if (cartasmazo < 10)
-        {
-            sprintf(mensaje,"%d%d",0,cartasmazo);
-        }
-        else sprintf(mensaje,"%d",cartasmazo);
-
-        strcat(mensaje, "_");
-        char caux[2];
-        caux[0]=jugada;
-        caux[1]='\0';
-        
-        strcat(mensaje, caux);
-        strcat(mensaje, "_");
-
-        if(jugada == 'r'){
-            if(reversa){
-                reversa = 0;
+            if(mensaje1[3]-'0' != 0 && mensaje1[3]-'0' != 1){
+                write(tuberia12[1],mensaje1,7);
+                tomc--;
             }
             else{
-                reversa = 1;
+                if(mensaje1[0]=='0'){
+                    //sscanf(mensaje1[6],"%d",&cartasmazo);
+                    cartasmazo= mensaje1[1] -'0';
+                }
+                else
+                {
+                    cartasmazo = (mensaje1[0]-'0')*10 + mensaje1[1] - '0';
+                    
+                }
+
+
+                if (mensaje1[5]=='b')
+                {
+                    printf("EL JUGADOR 1 HA SIDO BLOQUEADO\n");
+                    jugada = 'x';
+                }
+                else if (mensaje1[5]=='n')
+                {
+                    printf("EL JUGADOR 1 ROBA 4 CARTAS\n");
+                    robarN(1,4, &cartasmazo, &cartas);
+                    jugada = 'x';
+                }
+                else if (mensaje1[5]=='p')
+                {
+                    printf("EL JUGADOR 1 ROBA 2 CARTAS\n");
+                    robarN(1,2, &cartasmazo, &cartas);
+                    jugada = 'x';
+                }
+                else
+                {
+                    jugada = jugar(1, &cartasmazo, &cartas);
+                }
+                free(mensaje1);
             }
-        }
-
-        sprintf(mensaje,"%s%d",mensaje,reversa);
     
+        }
+        if(tomc != 0){
+            if(cartas == 0){
+                write(tuberia12[1], "DOMCCC", 7);
+                ganador = 1;
+                break;
+            }
+
+            if(cartasmazo == 0){
+                write(tuberia12[1], "DOMCCC", 7);
+                printf("Se acabaron las cartas del mazo\n El juego se acabo.\n");
+                break;
+            }
+
+            char* mensaje = (char*)malloc(sizeof(char)*7);
         
-    
-        if(reversa==0){                    
-            write(tuberia12[1], mensaje, (strlen(mensaje)+1));
+            if (cartasmazo < 10)
+            {
+                sprintf(mensaje,"%d%d",0,cartasmazo);
+            }
+            else sprintf(mensaje,"%d",cartasmazo);
 
-        }
-        else{       
-            write(tuberia14[1], mensaje, (strlen(mensaje)+1));
+            strcat(mensaje, "_");
+
+            
+            if(jugada == 'r'){
+                if(reversa){
+                    reversa = 0;
+                }
+                else{
+                    reversa = 1;
+                }
+            }
+                        
+
+            if(reversa==0){                    
+                strcat(mensaje,"0");
+            }
+            else{       
+                strcat(mensaje,"4");
+            }
+            sprintf(mensaje,"%s_%c",mensaje,jugada);
+            printf("Mensaje enviado por jugador 1: %s\n",mensaje);
+            write(tuberia12[1], mensaje, (strlen(mensaje)+1));
+            free(mensaje);
         }
     
         
@@ -2457,7 +2488,7 @@ int main()
     if(!ganador){
         printf("Gano el jugador %d\n",ganador);
     }
-    
+    printf("SALI DEL GUAIL POR ALGUNA RAZON\n");
     close(tuberia14[1]);
     close(tuberia41[0]);
     close(tuberia21[1]);
