@@ -8,7 +8,6 @@
 #include <time.h>
 
 
-
 void cambioColor(){
     int r, flag3 = 1;
     while(flag3){    
@@ -1913,10 +1912,8 @@ int main()
     pipe(tuberia43);
     pipe(tuberia41);
     pipe(tuberia14);
-
     int cartas = 7;
     int cartasmazo = 79;
-
     int idH1=-1;
     int idH2=-1;
     int idH3=-1;
