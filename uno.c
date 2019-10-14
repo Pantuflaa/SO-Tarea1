@@ -74,7 +74,7 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
 
     int iteraciones;
     if (*cartasmazo < n){
-        iteraciones=*cartasmazo;
+        iteraciones=(*cartasmazo);
     }else{
         iteraciones=n;
     }
@@ -687,13 +687,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
+                                             free(nent);
                                             
                                             return re;   
 
@@ -717,14 +719,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                          
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                  free(nent);
                                                 return 'n';
                                             }
-                                            
+                                              free(nent);
                                             return re;   
 
                                             break;
@@ -747,14 +750,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                          
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                  free(nent);
                                                 return 'n';
                                             }
-                                            
+                                              free(nent);
                                             return re;   
 
                                             break;
@@ -777,14 +781,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
-                                            
+                                             free(nent);
                                             return re;   
 
                                            break;
@@ -848,7 +853,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Ha jugado la carta\n");
-                                    char re = agregar[4];
+                                    char re = naux[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -949,14 +954,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                         
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                   free(nent);
                                                 return 'n';
                                             }
-                                            
+                                               free(nent);
                                             return re;   
 
                                             break;
@@ -979,14 +985,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                         
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                   free(nent);
                                                 return 'n';
                                             }
-                                            
+                                               free(nent);
                                             return re;   
 
                                             break;
@@ -1009,14 +1016,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                          
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                  free(nent);
                                                 return 'n';
                                             }
-                                            
+                                              free(nent);
                                             return re;   
 
                                             break;
@@ -1040,14 +1048,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                      
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                free(nent);
                                                 return 'n';
                                             }
-                                            
+                                                  free(nent);
                                             return re;   
 
                                            break;
@@ -1111,7 +1120,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = agregar[4];
+                                    char re = naux[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -1213,14 +1222,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                        
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                    free(nent);
                                                 return 'n';
                                             }
-                                            
+                                                free(nent);
                                             return re;   
 
                                             break;
@@ -1243,14 +1253,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                        
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                    free(nent);
                                                 return 'n';
                                             }
-                                            
+                                                free(nent);
                                             return re;   
 
                                             break;
@@ -1273,14 +1284,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
-                                            
+                                             free(nent);
                                             return re;   
 
                                             break;
@@ -1304,14 +1316,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
-                                            
+                                             free(nent);
                                             return re;   
 
                                            break;
@@ -1375,7 +1388,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = agregar[4];
+                                    char re = naux[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -1477,13 +1490,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
+                                             free(nent);
                                             
                                             return re;   
 
@@ -1507,14 +1522,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                           
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                 free(nent);
                                                 return 'n';
                                             }
-                                            
+                                             free(nent);
                                             return re;   
 
                                             break;
@@ -1537,14 +1553,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                            
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                free(nent);
                                                 return 'n';
                                             }
-                                            
+                                           free(nent); 
                                             return re;   
 
                                             break;
@@ -1568,14 +1585,15 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
-                                            free(nent);
+                                        
                                             free(naux);
                                             closedir(dir);
                                             if (nent[1]=='n'&& nent[4]=='4')
                                             {
+                                                free(nent);
                                                 return 'n';
                                             }
-                                            
+                                            free(nent);
                                             return re;   
 
                                            break;
@@ -1639,7 +1657,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = agregar[4];
+                                    char re = naux[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
