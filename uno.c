@@ -105,7 +105,6 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
     if ((dir = opendir ("mazo")) != NULL ) {
         while (((ent = readdir(dir)) != NULL) && (iteraciones !=0)) {
             if (fake < 2){
-                printf("Me meti a fake\n");
                 fake++;
             }
             else{
@@ -152,7 +151,7 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
         printf("ERROR AL ABRIR MAZO\n");
     }
     
-    printf("Me faltaron %d iteraciones\n",iteraciones);
+ 
     closedir(dir);
     (*cartasmazo)-=cartas;
     (*mano) += cartas;
