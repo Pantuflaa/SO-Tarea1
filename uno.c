@@ -7,7 +7,6 @@
 #include <dirent.h>
 #include <time.h>
 
-
 void cambioColor(){
     int r, flag3 = 1;
     while(flag3){    
@@ -73,7 +72,7 @@ char leerPozo(){
 void robarN (int J , int n, int* cartasmazo, int* mano){
 
     int iteraciones;
-    if (*cartasmazo < n){
+    if ((*cartasmazo) < n){
         iteraciones=(*cartasmazo);
     }else{
         iteraciones=n;
@@ -83,37 +82,40 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
     int i;
   
     for (i = 0; i < iteraciones; i++) {
-        int r = rand() % (*cartasmazo)+1;
+        int r = rand() % (*cartasmazo);
         int i2;
         for ( i2 = 0; i2 < i; i2++)
         {
             if(r==sualazar[i2]){
                 i2--;
-                 r= rand() % (*cartasmazo)+1;
+                 r= rand() % (*cartasmazo);
             }
             
         }              
          sualazar[i]=r;   
     }
-        
+
+   
     DIR *dir;
     struct dirent *ent;
-    int cont,k;
+    int cont=0,k;
     int fake = 0;
     int cartas=iteraciones;
-
-
+    
     if ((dir = opendir ("mazo")) != NULL ) {
-        while ((ent = readdir(dir)) != NULL||iteraciones !=0) {
-            if (strcmp(ent->d_name,".") == 0 || strcmp(ent->d_name,"..") == 0 ){
+        while (((ent = readdir(dir)) != NULL) && (iteraciones !=0)) {
+            if (fake < 2){
+                printf("Me meti a fake\n");
                 fake++;
             }
             else{
                 for(k = 0; k < cartas; k++){
                     if(cont==sualazar[k]){
                          char* direccion= (char *)malloc(sizeof(char)*40);
+                         char* aux= (char *)malloc(sizeof(char)*40);
+                         strcpy(aux,ent->d_name);
                          strcpy(direccion, "mazo/");
-                         strcat(direccion,ent->d_name);
+                         strcat(direccion,aux);
                          remove(direccion);
                          if (J==1)
                          {     
@@ -131,10 +133,11 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
                             strcpy(direccion,"j4");
                              /* code */
                          }
-                         strcat(direccion,ent->d_name);
+                         strcat(direccion,aux);
                          FILE *F=fopen(direccion,"w");
                          fclose(F); 
                          free(direccion);
+                         free(aux);
                          iteraciones--;                  
                          break;
                     }
@@ -144,6 +147,12 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
             cont++;
         }
     }
+    else
+    {
+        printf("ERROR AL ABRIR MAZO\n");
+    }
+    
+    printf("Me faltaron %d iteraciones\n",iteraciones);
     closedir(dir);
     (*cartasmazo)-=cartas;
     (*mano) += cartas;
@@ -1930,8 +1939,7 @@ int main()
     pipe(tuberia43);
     pipe(tuberia41);
     pipe(tuberia14);
-    int cartas = 7;
-    int cartasmazo = 79;
+  
     int idH1=-1;
     int idH2=-1;
     int idH3=-1;
@@ -2035,6 +2043,8 @@ int main()
 
 
     }
+    int cartas = 7;
+    int cartasmazo = 79;
 
     int cont=1;
     int reversa = 0;
