@@ -147,7 +147,7 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
     }
     closedir(dir);
     (*cartasmazo)-=cartas;
-    mano += cartas;
+    (*mano) += cartas;
 
 }
 void crearArchivos(){
@@ -659,7 +659,8 @@ char robar (int J, int* cartasmazo, int* cartas){
                        if (nent[4]=='c'||(nent[1]=='n'&& nent[4]=='4'))
                        {
                            while (1)
-                           {
+                           {    
+                               printf("Tu carta es una carta negra\n");
                                printf("Desea jugarla?\n1.-Si\n2.-No\nIngrese su opción:");
                                int op;
                                scanf("%d",&op);
@@ -713,7 +714,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             FILE* file1 = fopen(play, "w");
                                             fclose(file1);
                                          
-                                            printf("Y la jugó\n");
+                                        
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
@@ -743,7 +744,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                             FILE* file1 = fopen(play, "w");
                                             fclose(file1);
                                       
-                                            printf("Y la jugó\n");
+                                         
                                             char re = play[4];
                                             free(borrar);
                                             free(play);
@@ -1868,7 +1869,7 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
     
     if(done){
         if(*cartas == 1){
-            printf("UNO\nAl jugador %d le queda una carta!!!",jugador);
+            printf("UNO: Al jugador %d le queda una carta!!!\n",jugador);
         }
         char * borrar = (char * )malloc(sizeof(char)*40);
         strcpy(borrar,"juego/");
@@ -2032,7 +2033,6 @@ int main()
         char* mensaje1 = (char*)malloc(sizeof(char)*7);
         while(read(tuberia12[0],mensaje1,7) <= 0);
         
-        printf("\nTURNO DEL JUGADOR 2\n");
 
         if(strcmp(mensaje1, "DOMCCC") == 0){
             write(tuberia23[1], "DOMCCC", 7);
@@ -2044,6 +2044,7 @@ int main()
            write(tuberia23[1],mensaje1,7);
         }
         else{
+            printf("\nTURNO DEL JUGADOR 2\n");
             if(mensaje1[0]=='0'){
                 //sscanf(mensaje1[6],"%d",&cartasmazo);
                 cartasmazo= mensaje1[1] -'0';
@@ -2117,7 +2118,7 @@ int main()
                 strcat(mensaje,"1");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            printf("Mensaje enviado por jugador 2: %s\n",mensaje);
+            //printf("Mensaje enviado por jugador 2: %s\n",mensaje);
             write(tuberia23[1], mensaje, (strlen(mensaje)+1));
             free(mensaje);
             free(mensaje1);
@@ -2133,7 +2134,6 @@ int main()
         //int flag = 1;
         while(read(tuberia23[0],mensaje1,7) <= 0);
 
-        printf("\nTURNO DEL JUGADOR 3\n");
 
         if(strcmp(mensaje1, "DOMCCC") == 0){
             write(tuberia34[1], "DOMCCC", 7);
@@ -2145,6 +2145,7 @@ int main()
         }
         else{
 
+            printf("\nTURNO DEL JUGADOR 3\n");
             if(mensaje1[0]=='0'){
                 //sscanf(mensaje1[6],"%d",&cartasmazo);
                 cartasmazo= mensaje1[1] -'0';
@@ -2217,7 +2218,7 @@ int main()
                 strcat(mensaje,"2");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            printf("Mensaje enviado por jugador 3: %s\n",mensaje);
+            //printf("Mensaje enviado por jugador 3: %s\n",mensaje);
             write(tuberia34[1], mensaje, (strlen(mensaje)+1));
             
             free(mensaje);
@@ -2232,7 +2233,6 @@ int main()
         char* mensaje1 = (char*)malloc(sizeof(char)*7);
         while(read(tuberia34[0],mensaje1,7) <= 0);
 
-        printf("\nTURNO DEL JUGADOR 4\n");
 
         if(strcmp(mensaje1, "DOMCCC") == 0){
             write(tuberia41[1], "DOMCCC", 7);
@@ -2243,6 +2243,7 @@ int main()
            write(tuberia41[1],mensaje1,7);
         }
         else{
+            printf("\nTURNO DEL JUGADOR 4\n");
             if(mensaje1[0]=='0'){
                 //sscanf(mensaje1[6],"%d",&cartasmazo);
                 cartasmazo= mensaje1[1] -'0';
@@ -2316,16 +2317,16 @@ int main()
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
             write(tuberia41[1], mensaje, (strlen(mensaje)+1));
-            printf("Mensaje enviado por jugador 4: %s\n",mensaje);
+            //printf("Mensaje enviado por jugador 4: %s\n",mensaje);
             free(mensaje1);
             free(mensaje);
-            printf("XDDD\n");
+        
         }
     }
     while(id == idP)
     {   
         int tomc = 1;
-        printf("GOLA\n");
+     
         if(cont==1){
             reversa = 0;    
             printf("\nTURNO DE JUGADOR 1\n");
@@ -2375,7 +2376,7 @@ int main()
         }
         else{
             char* mensaje1 = (char*)malloc(sizeof(char)*7);
-            printf("potito\n");
+          
             while(read(tuberia41[0],mensaje1,7) <= 0);
            /* int flag = 1;
             while(flag){
@@ -2390,7 +2391,6 @@ int main()
                 }
                 printf("potito55\n");
             }*/
-            printf("\nTURNO DE JUGADOR 1\n");
             if(strcmp(mensaje1, "DOMCCC")== 0){
                 write(tuberia12[1], "DOMCCC", 7);
                 break;
@@ -2401,6 +2401,7 @@ int main()
                 tomc--;
             }
             else{
+                 printf("\nTURNO DE JUGADOR 1\n");
                 if(mensaje1[0]=='0'){
                     //sscanf(mensaje1[6],"%d",&cartasmazo);
                     cartasmazo= mensaje1[1] -'0';
@@ -2478,17 +2479,17 @@ int main()
                 strcat(mensaje,"4");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            printf("Mensaje enviado por jugador 1: %s\n",mensaje);
+            //printf("Mensaje enviado por jugador 1: %s\n",mensaje);
             write(tuberia12[1], mensaje, (strlen(mensaje)+1));
             free(mensaje);
         }
     
         
     }
-    if(!ganador){
+    if(ganador!=0){
         printf("Gano el jugador %d\n",ganador);
     }
-    printf("SALI DEL GUAIL POR ALGUNA RAZON\n");
+    //printf("SALI DEL GUAIL POR ALGUNA RAZON\n");
     close(tuberia14[1]);
     close(tuberia41[0]);
     close(tuberia21[1]);
