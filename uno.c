@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include <time.h>
 
+// Función que permite al jugador escoger color al jugar un +4 o un cambiocolor (crea el dummy)
+
 void cambioColor(){
     int r, flag3 = 1;
     while(flag3){    
@@ -40,6 +42,8 @@ void cambioColor(){
     fclose(archivo);
 }
 
+// Función que lee la carta que hay en el pozo y retorna el tipo de la carta
+
 char leerPozo(){
      DIR *dir;
 
@@ -68,6 +72,7 @@ char leerPozo(){
     
 }
 
+// Función que permite robar n cartas (usada para el efecto del +2 y el +4)
 
 void robarN (int J , int n, int* cartasmazo, int* mano){
 
@@ -157,6 +162,8 @@ void robarN (int J , int n, int* cartasmazo, int* mano){
     (*mano) += cartas;
 
 }
+
+// Función que crea los archivos y carpetas para el juego
 void crearArchivos(){
         /*
 
@@ -608,6 +615,9 @@ void crearArchivos(){
     }
     free(numeros);
 }
+
+// Función que permite robar una carta al jugador en caso de que no pueda jugar una carta. Si la carta que roba le sirve,
+// se le permite decidir si la juega o no
 
 char robar (int J, int* cartasmazo, int* cartas){
     sleep(1);
@@ -1731,6 +1741,10 @@ char robar (int J, int* cartasmazo, int* cartas){
     return 'M';
 }
 
+
+// Función que permite al jugador jugar su turno. Revisa la carta del pozo y la mano del jugador, por ende si no puede jugar ninguna
+// carta llama a la función robar. En otro caso, permite jugar la carta en el pozo y retorna el tipo de la carta jugada para aplicar
+// el efecto correspondiente.
 char jugar(int jugador, int* cartasmazo, int* cartas){
     DIR *dir;
     DIR *dir2;
@@ -1854,10 +1868,10 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
                 strcpy(borrar,dirplayer);
                 strcat(borrar,cartasmano[carta2]);
                 remove(borrar);
+                free(borrar); 
                 FILE* archivo= fopen(play,"w");
                 fclose(archivo);
                 free(play);
-                free(borrar);
                 (*cartas)--;
                 flag--;                                                                              
             }
@@ -1919,6 +1933,8 @@ char jugar(int jugador, int* cartasmazo, int* cartas){
     }    
 }
 
+// Desarrollo del juego
+
 int main()
 {
     crearArchivos();
@@ -1926,11 +1942,11 @@ int main()
     int tuberia21[2];
     int tuberia23[2];
     int tuberia32[2];
-    int tuberia34[2];
+    int tuberia34[2];              
     int tuberia43[2];
     int tuberia41[2];
     int tuberia14[2];
-    pipe(tuberia12);
+    pipe(tuberia12);                    // Creación de pipes
     pipe(tuberia21);
     pipe(tuberia23);
     pipe(tuberia32);
@@ -1953,7 +1969,7 @@ int main()
                 idH3 = getpid();
             }
             else{
-                idP = getpid();
+                idP = getpid();             // Creación de procesos hijos
             }
         }
         else
@@ -1977,7 +1993,7 @@ int main()
         close(tuberia34[1]);
         close(tuberia43[1]);
         close(tuberia34[0]);
-        close(tuberia43[0]);
+        close(tuberia43[0]);               // Se cierran las tuberias que no se usaran dependiendo del proceso correspondiente
         close(tuberia41[1]);
         close(tuberia14[1]);
         close(tuberia41[0]);
@@ -1994,7 +2010,7 @@ int main()
         close(tuberia41[1]);
         close(tuberia14[1]);
         close(tuberia41[0]);
-        close(tuberia14[0]);
+        close(tuberia14[0]);               // Se cierran las tuberias que no se usaran dependiendo del proceso correspondiente
         close(tuberia12[0]);
         close(tuberia21[0]);
         close(tuberia12[1]);
@@ -2014,7 +2030,7 @@ int main()
         close(tuberia32[0]);
         close(tuberia23[1]);
         close(tuberia32[1]);
-        close(tuberia12[0]);
+        close(tuberia12[0]);               // Se cierran las tuberias que no se usaran dependiendo del proceso correspondiente
         close(tuberia21[0]);
         close(tuberia12[1]);
         close(tuberia21[1]);
@@ -2031,7 +2047,7 @@ int main()
         close(tuberia23[0]);
         close(tuberia32[0]);
         close(tuberia34[0]);
-        close(tuberia43[0]);
+        close(tuberia43[0]);               // Se cierran las tuberias que no se usaran dependiendo del proceso correspondiente
         close(tuberia23[1]);
         close(tuberia32[1]);
         close(tuberia34[1]);
@@ -2050,7 +2066,9 @@ int main()
     char jugada;
     int ganador = 0;
 
-    
+    // Se crea un while para cada proceso, en el que quedarán atrapados hasta el fin del juego.
+
+    // Loop para el jugador 2
     while(id==idH1){
 
         //Player 2
@@ -2142,7 +2160,6 @@ int main()
                 strcat(mensaje,"1");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            //printf("Mensaje enviado por jugador 2: %s\n",mensaje);
             write(tuberia23[1], mensaje, (strlen(mensaje)+1));
             free(mensaje);
             free(mensaje1);
@@ -2150,12 +2167,12 @@ int main()
         }
     }
 
+    //Loop para el jugador 3
     while (id==idH2)
     {
         //Player 3
 
         char* mensaje1 = (char*)malloc(sizeof(char)*7);
-        //int flag = 1;
         while(read(tuberia23[0],mensaje1,7) <= 0);
 
 
@@ -2171,7 +2188,6 @@ int main()
 
             printf("\nTURNO DEL JUGADOR 3\n");
             if(mensaje1[0]=='0'){
-                //sscanf(mensaje1[6],"%d",&cartasmazo);
                 cartasmazo= mensaje1[1] -'0';
             }
             else
@@ -2242,7 +2258,6 @@ int main()
                 strcat(mensaje,"2");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            //printf("Mensaje enviado por jugador 3: %s\n",mensaje);
             write(tuberia34[1], mensaje, (strlen(mensaje)+1));
             
             free(mensaje);
@@ -2250,6 +2265,8 @@ int main()
         }
     
     }
+
+    // Loop para el jugador 4
     while (id==idH3)
     {
         //Player 4
@@ -2269,7 +2286,6 @@ int main()
         else{
             printf("\nTURNO DEL JUGADOR 4\n");
             if(mensaje1[0]=='0'){
-                //sscanf(mensaje1[6],"%d",&cartasmazo);
                 cartasmazo= mensaje1[1] -'0';
             }
             else
@@ -2341,12 +2357,13 @@ int main()
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
             write(tuberia41[1], mensaje, (strlen(mensaje)+1));
-            //printf("Mensaje enviado por jugador 4: %s\n",mensaje);
             free(mensaje1);
             free(mensaje);
         
         }
     }
+    
+    // Loop para el jugador 1
     while(id == idP)
     {   
         int tomc = 1;
@@ -2402,19 +2419,6 @@ int main()
             char* mensaje1 = (char*)malloc(sizeof(char)*7);
           
             while(read(tuberia41[0],mensaje1,7) <= 0);
-           /* int flag = 1;
-            while(flag){
-                printf("potito22\n");
-                if(read(tuberia21[0],mensaje1,7)>=0){
-                    flag = 0;
-                    printf("potito33\n");
-                } 
-                else if((read(tuberia41[0],mensaje1,7)>=0)){
-                    flag = 0;
-                    printf("potito44\n");
-                }
-                printf("potito55\n");
-            }*/
             if(strcmp(mensaje1, "DOMCCC")== 0){
                 write(tuberia12[1], "DOMCCC", 7);
                 break;
@@ -2427,7 +2431,6 @@ int main()
             else{
                  printf("\nTURNO DE JUGADOR 1\n");
                 if(mensaje1[0]=='0'){
-                    //sscanf(mensaje1[6],"%d",&cartasmazo);
                     cartasmazo= mensaje1[1] -'0';
                 }
                 else
@@ -2503,7 +2506,6 @@ int main()
                 strcat(mensaje,"4");
             }
             sprintf(mensaje,"%s_%c",mensaje,jugada);
-            //printf("Mensaje enviado por jugador 1: %s\n",mensaje);
             write(tuberia12[1], mensaje, (strlen(mensaje)+1));
             free(mensaje);
         }
@@ -2513,7 +2515,6 @@ int main()
     if(ganador!=0){
         printf("Gano el jugador %d\n",ganador);
     }
-    //printf("SALI DEL GUAIL POR ALGUNA RAZON\n");
     close(tuberia14[1]);
     close(tuberia41[0]);
     close(tuberia21[1]);
@@ -2521,7 +2522,7 @@ int main()
     close(tuberia23[1]);
     close(tuberia32[0]);
     close(tuberia34[1]);
-    close(tuberia43[0]);
+    close(tuberia43[0]);            //Cierre de los pipes
     close(tuberia23[0]);
     close(tuberia32[1]);
     close(tuberia41[1]);
