@@ -861,7 +861,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Ha jugado la carta\n");
-                                    char re = naux[4];
+                                    char re = nent[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -1128,7 +1128,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = naux[4];
+                                    char re = nent[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -1396,7 +1396,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = naux[4];
+                                    char re = nent[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
@@ -1665,7 +1665,7 @@ char robar (int J, int* cartasmazo, int* cartas){
                                     fclose(file1);
                             
                                     printf("Y la jugó\n");
-                                    char re = naux[4];
+                                    char re = nent[4];
                                     free(borrar);
                                     free(agregar);
                                     free(nent);
